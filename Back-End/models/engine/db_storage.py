@@ -10,7 +10,7 @@ from models.strategy import Strategy
 from models.backtest import Backtest
 from os import getenv
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 
@@ -86,9 +86,7 @@ class DBStorage:
         return None
 
     def count(self, cls=None):
-        """
-        count the number of objects in storage
-        """
+        """count the number of objects in storage"""
         all_class = classes.values()
 
         if not cls:
@@ -99,3 +97,55 @@ class DBStorage:
             count = len(models.storage.all(cls).values())
 
         return count
+
+    def last_date(self):
+        """Returns the last date of prices avilable"""
+        last_date = self.__session.query(Price).order_by(desc('date')).first()
+        return last_date.p_date
+
+    def data_feed(self):
+        """updates the prices for all companies"""
+        from datetime import datetime, date, timedelta
+        import yfinance as yf
+        from numpy import isnan
+
+        origin_date = date(2015, 1, 1)  # first date in history for this app
+        today =  str(datetime.now().date())
+        companies = self.all(Company).values()
+        for company in companies:
+            try:
+                last_date = self.__session.query(Price)
+                last_date = last_date.filter_by(company_id=company.id)
+                last_date = last_date.order_by(desc('date')).first().p_date
+                history = str(last_date + timedelta(days=1))
+            except:
+                history = str(origin_date)
+            if history < today:
+                print(company.ticker)
+                data = yf.download(company.ticker, start=history, end=today)
+                for i in range(len(data)):
+                    price_dict = {}
+                    date = data.index[i]
+                    price_dict["p_date"] = date
+                    price_dict["p_open"] = data.loc[date, "Open"]
+                    price_dict["p_close"] = data.loc[date, "Close"]
+                    price_dict["p_high"] = data.loc[date, "High"]
+                    price_dict["p_low"] = data.loc[date, "Low"]
+                    price_dict["volume"] = data.loc[date, "Volume"]
+                    price_dict["p_adj_close"] = data.loc[date, "Adj Close"]
+
+                    # check if any Nan in price_dict
+                    is_null = 0
+                    for key in price_dict.keys():
+                        if key is not "p_date":
+                            if isnan(price_dict[key]):
+                                is_null = 1
+                                break
+                    # if any nan in price_dict obj Price not created
+                    if not is_null:
+                        try:
+                            instance = Price(**price_dict)
+                            instance.company_id = company.id
+                            instance.save()
+                        except:
+                            pass

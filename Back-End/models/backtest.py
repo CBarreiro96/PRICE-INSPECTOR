@@ -3,7 +3,7 @@
 
 import models
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, Float, DateTime
+from sqlalchemy import Column, String, Integer, Float, Date
 from sqlalchemy import ForeignKey, Table
 from sqlalchemy.orm import relationship
 from datetime import datetime
@@ -32,8 +32,8 @@ class Backtest(BaseModel, Base):
     param_7 = Column(Float, nullable=False, default=0)
     param_8 = Column(Float, nullable=False, default=0)
     param_9 = Column(Float, nullable=False, default=0)
-    initial_date = Column(DateTime, nullable=False)
-    final_date = Column(DateTime, nullable=False)
+    initial_date = Column(Date, nullable=False)
+    final_date = Column(Date, nullable=False)
 
     def __init__(self, *args, **kwargs):
         """initializes Backtest"""
