@@ -1,6 +1,6 @@
 #!/bin/bash
-curl -X POST http://0.0.0.0:5000/api/v1/companies/528aa32f-cf40-4fa0-a36d-c83299579507/ -H "Content-Type: application/json" -d '{"date_p": "2020-03-03T00:00:00.000000", "open_p": "75.333542", "high_p": "75.415404", "low_p": "70.900400", "close_p": "71.773636", "volume": "319475600"}' -vvv
-curl -X POST http://0.0.0.0:5000/api/v1/companies/528aa32f-cf40-4fa0-a36d-c83299579507/prices/ -H "Content-Type: application/json" -d '{"date_p": "2020-03-03T00:00:00.000000", "open_p": "65.430305", "high_p": "68.987728", "low_p": "65.244248", "close_p": "66.030655", "volume": "286744800"}' -vvv
+curl POST http://0.0.0.0:5000/api/v1/companies/e60f150f-96f1-46e9-a0b2-e25e43dd5707/prices -H "Content-Type: application/json" -d '{"p_date": "2020-03-03", "p_open": "75.333542", "p_high": "75.415404", "p_low": "70.900400", "p_close": "71.773636", "volume": "319475600"}' -vvv
+curl POST http://0.0.0.0:5000/api/v1/companies/e60f150f-96f1-46e9-a0b2-e25e43dd5707/prices -H "Content-Type: application/json" -d '{"p_date": "2020-03-09", "p_open": "65.430305", "p_high": "68.987728", "p_low": "65.244248", "p_close": "66.030655", "volume": "286744800"}' -vvv
 
 
 #Open       High        Low      Close     Volume  Dividends  Stock Splits
