@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 """Index """
+from models.user import User
 from models.company import Company
+from models.price import Price
+from models.strategy import Strategy
+from models.backtest import Backtest
 from models import storage
 from api.v1.views import app_views
 from flask import jsonify
@@ -15,8 +19,8 @@ def status():
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def number_objects():
     """Retrieves the number of objects of each type"""
-    classes = [Company]
-    names = ["companies"]
+    classes = [Company, Price]
+    names = ["companies", "prices"]
 
     num_objs = {}
     for i in range(len(classes)):

@@ -62,8 +62,8 @@ def post_price(company_id):
         abort(404)
     if not request.get_json():
         abort(400, description="Not a JSON")
-    if 'date_p' not in request.get_json():
-        abort(400, description="Missing date_p")
+    if 'p_date' not in request.get_json():
+        abort(400, description="Missing p_date")
 
     data = request.get_json()
     instance = Price(**data)
@@ -91,3 +91,20 @@ def put_price(price_id):
             setattr(price, key, value)
     storage.save()
     return make_response(jsonify(price.to_dict()), 200)
+
+
+@app_views.route('/prices/update', methods=['GET'],
+                 strict_slashes=False)
+@swag_from('documentation/price/update.yml', methods=['GET'])
+def get_update():
+    """updtadates prices"""
+    storage.data_feed()
+    return jsonify("updated")
+
+
+@app_views.route('/prices/last_date', methods=['GET'],
+                 strict_slashes=False)
+@swag_from('documentation/price/last_date.yml', methods=['GET'])
+def get_last_date():
+    """Retrives the last date of the prices"""
+    return jsonify(str(storage.last_date()))
