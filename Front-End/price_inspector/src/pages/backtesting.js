@@ -4,9 +4,12 @@ import Header from '../components/Header'
 
 const Backtesting = () => {
     return (
+        <>
+        <Header/>
         <div className="h-screen flex justify-center items-center">
             <BacktestingContent />
         </div>
+        </>
     )
 }
 

@@ -1,17 +1,17 @@
 import React from 'react'
+import Headerlanding from '../components/Headerlanding';
 import Content from '../components/Content';
-import Header from '../components/Header';
 
-const Landing = () => {
+const Landing = (toggle) => {
     return (
-        <div>
-            <Content />
-       </div>
-    )
+        <>
+            <Headerlanding/>
+            /*<Content/>*/
+        </>
+)
 }
 
 export default Landing;
 /*
-<content>
 <footer >
 */
