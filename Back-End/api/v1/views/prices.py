@@ -38,7 +38,8 @@ def get_price(price_id):
     return jsonify(price.to_dict())
 
 
-@app_views.route('/prices/<price_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/prices/<price_id>', methods=['DELETE'],
+                 strict_slashes=False)
 @swag_from('documentation/price/delete_price.yml', methods=['DELETE'])
 def delete_price(price_id):
     """Deletes a price based on id provided"""

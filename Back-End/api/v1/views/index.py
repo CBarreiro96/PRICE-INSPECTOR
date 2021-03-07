@@ -2,7 +2,6 @@
 """Index """
 from models.user import User
 from models.company import Company
-from models.price import Price
 from models.strategy import Strategy
 from models.backtest import Backtest
 from models import storage
@@ -19,8 +18,8 @@ def status():
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def number_objects():
     """Retrieves the number of objects of each type"""
-    classes = [Company, Price]
-    names = ["companies", "prices"]
+    classes = [User, Company, Strategy, Backtest]
+    names = ["users", "companies", "strategies", "backtests"]
 
     num_objs = {}
     for i in range(len(classes)):
