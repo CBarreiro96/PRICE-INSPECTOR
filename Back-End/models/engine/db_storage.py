@@ -106,26 +106,56 @@ class DBStorage:
     def data_feed(self):
         """updates the prices for all companies"""
         from datetime import datetime, date, timedelta
+        import pytz  # to work with the time zone of New York
         import yfinance as yf
         from numpy import isnan
 
+        end_week = [5]  # 5 for saturday, 6 for sunday
         origin_date = date(2015, 1, 1)  # first date in history for this app
-        today =  str(datetime.now().date())
+        today = datetime.now(pytz.timezone('US/Eastern')).date()
+        yesterday = today - timedelta(days=1)
+        day_week = yesterday.weekday()  # checks for the day of the week
+
         companies = self.all(Company).values()
+        # companies = []
+        # companies.append(self.get(Company,
+        #                          "00890dc9-5876-4c24-851c-1888e5310c41"))
+        count = 0
+        n_comp = len(companies)
         for company in companies:
+            count += 1
+            print("{}/{} companies, progress: {}%".format(count,
+                                                          n_comp,
+                                                          (count/n_comp)*100))
             try:
                 last_date = self.__session.query(Price)
                 last_date = last_date.filter_by(company_id=company.id)
                 last_date = last_date.order_by(desc('date')).first().p_date
-                history = str(last_date + timedelta(days=1))
-            except:
-                history = str(origin_date)
-            if history < today:
-                print(company.ticker)
-                data = yf.download(company.ticker, start=history, end=today)
+                last_date = last_date + timedelta(days=1)
+                history = last_date
+                # print(company.name)
+                # print(history)
+            except Exception:
+                history = origin_date
+
+            # Data has one day delay and is just for working days,
+            # data is not updated when yesterday == saturday:
+            if history < today and day_week not in end_week:
+                print(company.ticker, history, yesterday)
+
+                # Useof yfinance library to import prices from YahooFinance
+                data = yf.download(company.ticker, start=str(history),
+                                   end=str(yesterday))
+                # data = yf.Ticker(company.ticker).history(start=history,
+                #                                         end=today)
+
+                # read the DataFrame comming from yfinance to store in the DB
                 for i in range(len(data)):
                     price_dict = {}
                     date = data.index[i]
+                    if date <= history:  # dates can not be repeated
+                        continue
+                    # print(data.loc[date])
                     price_dict["p_date"] = date
                     price_dict["p_open"] = data.loc[date, "Open"]
                     price_dict["p_close"] = data.loc[date, "Close"]
@@ -141,11 +171,54 @@ class DBStorage:
                             if isnan(price_dict[key]):
                                 is_null = 1
                                 break
-                    # if any nan in price_dict obj Price not created
+                    # if any Nan in price_dict obj Price not created
                     if not is_null:
                         try:
                             instance = Price(**price_dict)
                             instance.company_id = company.id
-                            instance.save()
-                        except:
+                            self.__session.add(instance)
+                        except Exception:
                             pass
+            self.__session.commit()
+
+    def run_backtester(self, **kwargs):
+        """executes the backtester module"""
+        from datetime import datetime, date
+        import pandas as pd
+        from modules.backtester import backtester
+
+        date_format = '%Y-%m-%d'
+        initial_date = datetime.strptime(kwargs["initial_date"],
+                                         date_format).date()
+        final_date = datetime.strptime(kwargs["final_date"],
+                                       date_format).date()
+
+        # query the DB to extract the specific prices
+        prices = self.__session.query(Price)
+        prices = prices.filter(Price.company_id == kwargs["company_id"])
+        prices = prices.filter(Price.p_date >= initial_date)
+        prices = prices.filter(Price.p_date <= final_date)
+        prices = prices.all()
+
+        # build the DataFrame with the specific prices
+        fields = ['p_date', 'p_open', 'p_high', 'p_low', 'p_close', 'volume',
+                  'p_adj_close']
+        df = pd.DataFrame([{f:
+                            getattr(p, f) for f in fields} for p in prices])
+        df.columns = ['Date', 'Open', 'High', 'Low',
+                      'Close', 'Volume', 'Adj_Close']
+
+        # query the requested strategy
+        strategy = self.__session.query(Strategy)
+        strategy = strategy.filter(Strategy.id == kwargs["strategy_id"])
+        strategy = strategy.first()
+
+        # check advanced or default parameters for the requested strategy
+        for attr, value in strategy.to_dict().items():
+            if attr not in kwargs:
+                kwargs[attr] = value
+
+        # query the name of the requested strategy
+        strategy = strategy.name
+
+        return backtester(df, strategy, **kwargs)
