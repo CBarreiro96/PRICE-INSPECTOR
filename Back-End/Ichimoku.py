@@ -3,19 +3,26 @@ from Data_Yfinance import Data
 from datetime import datetime
 from graph import Graph
 
+'''
+Method with Ichimoku strategy
+'''
+
 
 def ichimoku(Data, dict_paramater):
     for i in range(len(Data)):
         try:
             # Tenkan trend
             if (i + dict_paramater['tenkan_lookback']) <= len(Data) - 1:
-                Data.loc[(i + dict_paramater['tenkan_lookback']), 'Tenkan'] = (Data.iloc[i:(i + dict_paramater['tenkan_lookback']), 2].max() + Data.iloc[i:(
-                            i + dict_paramater['tenkan_lookback']), 3].min()) / 2
+                Data.loc[(i + dict_paramater['tenkan_lookback']), 'Tenkan'] = (Data.iloc[i:(
+                            i + dict_paramater['tenkan_lookback']), 2].max() + Data.iloc[i:(
+                        i + dict_paramater['tenkan_lookback']), 3].min()) / 2
             # Kijun-sen trend
             if (i + dict_paramater['kijun_sen_lookback']) <= len(Data) - 1:
-                Data.loc[(i + dict_paramater['kijun_sen_lookback']), 'Kijun-sen'] = (Data.iloc[i:(i + dict_paramater['kijun_sen_lookback']),
-                                                                 2].max() + Data.iloc[i:(i + dict_paramater['kijun_sen_lookback']),
-                                                                            3].min()) / 2
+                Data.loc[(i + dict_paramater['kijun_sen_lookback']), 'Kijun-sen'] = (Data.iloc[i:(
+                            i + dict_paramater['kijun_sen_lookback']),
+                                                                                     2].max() + Data.iloc[i:(
+                            i + dict_paramater['kijun_sen_lookback']),
+                                                                                                3].min()) / 2
         except ValueError:
             pass
 
@@ -25,20 +32,26 @@ def ichimoku(Data, dict_paramater):
             if i + dict_paramater['chikou_span_lookback'] <= len(Data) - 1:
                 Data.loc[i, 'Chikou-span'] = Data.iloc[(i + dict_paramater['chikou_span_lookback']), 4]
             # Senkou-span A
-            if (i + (dict_paramater['senkou_span_A_projection'] + dict_paramater['kijun_sen_lookback'])) <= len(Data) - 1:
-                Data.loc[(i + (dict_paramater['senkou_span_A_projection'] + dict_paramater['kijun_sen_lookback'])), 'Senkou-span A'] = (Data.iloc[(
-                                                                                                                    i + dict_paramater['kijun_sen_lookback']), 6] +
-                                                                                              Data.iloc[(
-                                                                                                                    i + dict_paramater['kijun_sen_lookback']), 7]) / 2
+            if (i + (dict_paramater['senkou_span_A_projection'] + dict_paramater['kijun_sen_lookback'])) <= len(
+                    Data) - 1:
+                Data.loc[(i + (dict_paramater['senkou_span_A_projection'] + dict_paramater[
+                    'kijun_sen_lookback'])), 'Senkou-span A'] = (Data.iloc[(
+                                                                                   i + dict_paramater[
+                                                                               'kijun_sen_lookback']), 6] +
+                                                                 Data.iloc[(
+                                                                                   i + dict_paramater[
+                                                                               'kijun_sen_lookback']), 7]) / 2
             # Senkou-span B
-            if (i + (dict_paramater['senkou_span_B_lookback'] + dict_paramater['senkou_span_B_projection'])) <= len(Data) - 1:
-                Data.loc[(i + (dict_paramater['senkou_span_B_lookback'] + dict_paramater['senkou_span_B_projection'])), 'Senkou-span B'] = (Data.iloc[i:(
-                            i + dict_paramater['senkou_span_B_lookback']), 2].max() + Data.iloc[i:(i + dict_paramater['senkou_span_B_lookback']),
-                                                                  3].min()) / 2
+            if (i + (dict_paramater['senkou_span_B_lookback'] + dict_paramater['senkou_span_B_projection'])) <= len(
+                    Data) - 1:
+                Data.loc[(i + (dict_paramater['senkou_span_B_lookback'] + dict_paramater[
+                    'senkou_span_B_projection'])), 'Senkou-span B'] = (Data.iloc[i:(
+                        i + dict_paramater['senkou_span_B_lookback']), 2].max() + Data.iloc[i:(
+                            i + dict_paramater['senkou_span_B_lookback']),
+                                                                                  3].min()) / 2
         except ValueError:
             pass
     signal(Data, dict_paramater['chikou_span_lookback'])
-    Data.index = Data['Date']
     return Data
 
 
@@ -55,6 +68,3 @@ def signal(Data, Chikou_span_Period):
                 Data.iloc[i - Chikou_span_Period, 4]:
             Data.loc[i, 'Sell'] = 1
     return Data
-
-
-
