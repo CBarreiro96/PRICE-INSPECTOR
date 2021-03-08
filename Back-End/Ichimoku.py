@@ -4,58 +4,57 @@ from datetime import datetime
 from graph import Graph
 
 
-def ichimoku(Data, Tenkan_Period, Kijun_sen_Period, Chikou_span_Period,  Senkou_span_A_Period, Senkou_span_B_Period, Shift_Senkou_span_B):
+def ichimoku(Data, dict_paramater):
     for i in range(len(Data)):
         try:
             # Tenkan trend
-            if (i + Tenkan_Period) <= len(Data) - 1:
-                Data.loc[(i + Tenkan_Period), 'Tenkan'] = (Data.iloc[i:(i + Tenkan_Period), 2].max() + Data.iloc[i:(i + Tenkan_Period), 3].min()) / 2
+            if (i + dict_paramater['tenkan_lookback']) <= len(Data) - 1:
+                Data.loc[(i + dict_paramater['tenkan_lookback']), 'Tenkan'] = (Data.iloc[i:(i + dict_paramater['tenkan_lookback']), 2].max() + Data.iloc[i:(
+                            i + dict_paramater['tenkan_lookback']), 3].min()) / 2
             # Kijun-sen trend
-            if (i + Kijun_sen_Period) <= len(Data) - 1:
-                Data.loc[(i + Kijun_sen_Period), 'Kijun-sen'] = (Data.iloc[i:(i + Kijun_sen_Period), 2].max() + Data.iloc[i:(i + Kijun_sen_Period), 3].min()) / 2
+            if (i + dict_paramater['kijun_sen_lookback']) <= len(Data) - 1:
+                Data.loc[(i + dict_paramater['kijun_sen_lookback']), 'Kijun-sen'] = (Data.iloc[i:(i + dict_paramater['kijun_sen_lookback']),
+                                                                 2].max() + Data.iloc[i:(i + dict_paramater['kijun_sen_lookback']),
+                                                                            3].min()) / 2
         except ValueError:
             pass
 
     for i in range(len(Data)):
         try:
             # Chikou-span
-            if i + Chikou_span_Period <= len(Data) - 1:
-                Data.loc[i, 'Chikou-span'] = Data.iloc[(i + Chikou_span_Period), 4]
+            if i + dict_paramater['chikou_span_lookback'] <= len(Data) - 1:
+                Data.loc[i, 'Chikou-span'] = Data.iloc[(i + dict_paramater['chikou_span_lookback']), 4]
             # Senkou-span A
-            if (i + (Senkou_span_A_Period+Kijun_sen_Period)) <= len(Data) - 1:
-                Data.loc[(i + (Senkou_span_A_Period+Kijun_sen_Period)), 'Senkou-span A'] = (Data.iloc[(i + Kijun_sen_Period), 6] + Data.iloc[(i + Kijun_sen_Period), 7]) / 2
+            if (i + (dict_paramater['senkou_span_A_projection'] + dict_paramater['kijun_sen_lookback'])) <= len(Data) - 1:
+                Data.loc[(i + (dict_paramater['senkou_span_A_projection'] + dict_paramater['kijun_sen_lookback'])), 'Senkou-span A'] = (Data.iloc[(
+                                                                                                                    i + dict_paramater['kijun_sen_lookback']), 6] +
+                                                                                              Data.iloc[(
+                                                                                                                    i + dict_paramater['kijun_sen_lookback']), 7]) / 2
             # Senkou-span B
-            if (i + (Senkou_span_B_Period+Shift_Senkou_span_B)) <= len(Data) - 1:
-                Data.loc[(i + (Senkou_span_B_Period+Shift_Senkou_span_B)), 'Senkou-span B'] = (Data.iloc[i:(i + Senkou_span_B_Period), 2].max() + Data.iloc[i:(i + Senkou_span_B_Period),
-                                                                                        3].min()) / 2
+            if (i + (dict_paramater['senkou_span_B_lookback'] + dict_paramater['senkou_span_B_projection'])) <= len(Data) - 1:
+                Data.loc[(i + (dict_paramater['senkou_span_B_lookback'] + dict_paramater['senkou_span_B_projection'])), 'Senkou-span B'] = (Data.iloc[i:(
+                            i + dict_paramater['senkou_span_B_lookback']), 2].max() + Data.iloc[i:(i + dict_paramater['senkou_span_B_lookback']),
+                                                                  3].min()) / 2
         except ValueError:
             pass
-    signal(Data, Chikou_span_Period)
+    signal(Data, dict_paramater['chikou_span_lookback'])
     Data.index = Data['Date']
-    Graph(Data)
+    return Data
 
 
 def signal(Data, Chikou_span_Period):
     for i in range(Chikou_span_Period, len(Data)):
         if (Data.iloc[i, 6] > Data.iloc[i, 7]) and (Data.iloc[i - 1, 6] < Data.iloc[i - 1, 7]) and (
-                Data.iloc[i, 4] > Data.iloc[i, 9]) and (Data.iloc[i, 4] > Data.iloc[i, 10]) and Data.iloc[i - Chikou_span_Period, 8] > \
+                Data.iloc[i, 4] > Data.iloc[i, 9]) and (Data.iloc[i, 4] > Data.iloc[i, 10]) and Data.iloc[
+            i - Chikou_span_Period, 8] > \
                 Data.iloc[i - Chikou_span_Period, 4]:
             Data.loc[i, 'Buy'] = 1
         if (Data.iloc[i, 6] < Data.iloc[i, 7]) and (Data.iloc[i - 1, 6] > Data.iloc[i - 1, 7]) and (
-                Data.iloc[i, 4] < Data.iloc[i, 9]) and (Data.iloc[i, 4] < Data.iloc[i, 10]) and Data.iloc[i - Chikou_span_Period, 8] < \
+                Data.iloc[i, 4] < Data.iloc[i, 9]) and (Data.iloc[i, 4] < Data.iloc[i, 10]) and Data.iloc[
+            i - Chikou_span_Period, 8] < \
                 Data.iloc[i - Chikou_span_Period, 4]:
             Data.loc[i, 'Sell'] = 1
     return Data
 
 
-if __name__ == "__main__":
-    Tenkan_Period = 9
-    Kijun_sen_Period = 26
-    Chikou_span_Period = 26
-    Senkou_span_A_Period = 26
-    Senkou_span_B_Period = 52
-    Shift_Senkou_span_B = 26
 
-    Data = Data.reset_index()
-    Data.rename(columns={'Close': 'Price'}, inplace=True)
-    ichimoku(Data, Tenkan_Period, Kijun_sen_Period, Chikou_span_Period,  Senkou_span_A_Period, Senkou_span_B_Period, Shift_Senkou_span_B)
