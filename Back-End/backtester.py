@@ -13,7 +13,7 @@ def backtester(Data, Strategy, dict_parameter):
     Profit_OPeration = 0
     Number_Action = 0
     if Strategy == 'ichimoku':
-        ichimoku(Data, dict_parameter)
+        Data = ichimoku(Data, dict_parameter)
     for i in range(len(Data)):
         ciclo = 0
         if Data.iloc[i, 11] == 1 and Data.iloc[i, 4] < Balance and ciclo == 0:
@@ -43,7 +43,7 @@ def backtester(Data, Strategy, dict_parameter):
                 price_buy - (price_buy * Stop_loss)) and procces == 1 and ciclo == 0:
             print(round(Number_Action * Data.iloc[i, 4]))
             Balance = round(Balance + (Number_Action * Data.iloc[i, 4]))
-            #print('Vendo2')
+            print('Vendo2')
             if round(Number_Action * Data.iloc[i, 4]) > price_buy:
                 Profit_OPeration += 1
             else:

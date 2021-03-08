@@ -58,13 +58,11 @@ def ichimoku(Data, dict_paramater):
 def signal(Data, Chikou_span_Period):
     for i in range(Chikou_span_Period, len(Data)):
         if (Data.iloc[i, 6] > Data.iloc[i, 7]) and (Data.iloc[i - 1, 6] < Data.iloc[i - 1, 7]) and (
-                Data.iloc[i, 4] > Data.iloc[i, 9]) and (Data.iloc[i, 4] > Data.iloc[i, 10]) and Data.iloc[
-            i - Chikou_span_Period, 8] > \
-                Data.iloc[i - Chikou_span_Period, 4]:
-            Data.loc[i, 'Buy'] = 1
+                Data.iloc[i, 4] > Data.iloc[i, 9]) and (Data.iloc[i, 4] > Data.iloc[i, 10]) and Data.iloc[i - 26, 8] > \
+                Data.iloc[i - 26, 4]:
+            Data.loc[i, 'Buy_Sell'] = 1
         if (Data.iloc[i, 6] < Data.iloc[i, 7]) and (Data.iloc[i - 1, 6] > Data.iloc[i - 1, 7]) and (
-                Data.iloc[i, 4] < Data.iloc[i, 9]) and (Data.iloc[i, 4] < Data.iloc[i, 10]) and Data.iloc[
-            i - Chikou_span_Period, 8] < \
-                Data.iloc[i - Chikou_span_Period, 4]:
-            Data.loc[i, 'Sell'] = 1
+                Data.iloc[i, 4] < Data.iloc[i, 9]) and (Data.iloc[i, 4] < Data.iloc[i, 10]) and Data.iloc[i - 26, 8] < \
+                Data.iloc[i - 26, 4]:
+            Data.loc[i, 'Buy_Sell'] = -1
     return Data
