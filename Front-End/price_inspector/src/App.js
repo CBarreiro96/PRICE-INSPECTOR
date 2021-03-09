@@ -5,6 +5,7 @@ import Backtesting from './pages/backtesting';
 import Inspector_choices from './pages/inspector_choices';
 import Guide from './pages/guide';
 import Login from './pages/Login'
+import SingUp from './pages/SignUp'
 import Footer from './components/Footer';
 
 
@@ -17,6 +18,7 @@ function App() {
       <Route path="/inspector_choices" component={Inspector_choices} />
       <Route path="/guide" component={Guide} />
       <Route path="/login" component={Login}/>
+      <Route path="/SingUp" component={SingUp}/>
     </switch>
     <Footer />
     </>

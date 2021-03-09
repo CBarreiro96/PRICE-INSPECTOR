@@ -34,7 +34,9 @@ const Headerlanding = () => {
                         <Link className="links" to="#Our_Team">Our Team</Link>
                     </div>
                 <div>
-                    <Link className="inline-block text-md px-4 py-2 leading-none border rounded  hover:tebg-gradient-to-r from-rich_black to-navy_blue-DEFAUL hover:bg-nianza mt-4 lg:mt-0" to="/login">Log in</Link>
+                    <Link className="inline-block text-md px-4 py-2 leading-none border rounded  hover:tebg-gradient-to-r from-rich_black to-navy_blue-DEFAUL hover:bg-nianza mt-4 lg:mt-0" to="/login">
+                        Log in
+                    </Link>
                 </div>
                 </div>
             </nav>
