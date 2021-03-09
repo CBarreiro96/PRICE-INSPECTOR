@@ -1,13 +1,15 @@
 import React from 'react'
 import Header from '../components/Header'
+import IshimokuStrategy from '../components/Ishimoku';
+
 
 const Guide = () => {
+
     return (
         <>
         <Header/>
-        <div className="h-screen bg-yellow-300 flex justify-center items-center" >
-            <h1 className="text-7xl">I'm your guide!</h1>
-        </div>
+        <div className="text-center text-6xl py-5">Strategies</div>
+        <IshimokuStrategy/>
         </>
     )
 }
