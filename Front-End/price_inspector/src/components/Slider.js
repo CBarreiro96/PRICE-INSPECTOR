@@ -19,22 +19,27 @@ const Slider = () => {
 	}
 
 	return (
-		<div className="slider">
-			{
-				sliderArr.map((item,index)=> {
-					return (
-						<div key={index} className="slide" style={{transform:`translateX(${x}%)`}}>
-							{item}
-						</div>
-					)
-				})
-			}
-			<button id="goLeft" onClick={goLeft}>
-				<i class="fas fa-angle-left"></i>
-			</button>
-			<button id="goRight" onClick={goRight}>
-				<i class="fas fa-angle-right"></i>
-			</button>
+		<div>
+			<h1 className="text-center text-4xl sm:text-6xl py-5">
+				Strategies
+			</h1>
+			<div className="slider">
+				{
+					sliderArr.map((item,index)=> {
+						return (
+							<div key={index} className="slide" style={{transform:`translateX(${x}%)`}}>
+								{item}
+							</div>
+						)
+					})
+				}
+				<button id="goLeft" onClick={goLeft}>
+					<i class="fas fa-angle-left"></i>
+				</button>
+				<button id="goRight" onClick={goRight}>
+					<i class="fas fa-angle-right"></i>
+				</button>
+			</div>
 		</div>
 	)
 }

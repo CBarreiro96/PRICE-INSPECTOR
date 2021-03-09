@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../components/Header'
 import Slider from '../components/Slider'
+import BasicConcepts from '../components/Concepts'
 
 
 const Guide = () => {
@@ -8,10 +9,10 @@ const Guide = () => {
     return (
         <>
         <Header/>
-        <div className="text-center text-4xl sm:text-6xl py-5">Strategies</div>
+        <BasicConcepts/>
         <Slider/>
         </>
     )
 }
 
-export default Guide
+export default Guide;
