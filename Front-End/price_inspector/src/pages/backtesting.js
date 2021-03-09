@@ -1,11 +1,16 @@
 import React from 'react'
 import BacktestingContent from '../components/BacktestingContent'
 import Header from '../components/Header'
+import Footer from '../components/Footer';
+import BacktestResults from '../components/BacktestResults';
 
 const Backtesting = () => {
     return (
-        <div className="h-screen flex justify-center items-center">
+        <div className="h-screen justify-center items-center">
+            <Header />
             <BacktestingContent />
+            <BacktestResults />
+            <Footer />
         </div>
     )
 }

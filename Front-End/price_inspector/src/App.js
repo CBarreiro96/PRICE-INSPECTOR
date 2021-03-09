@@ -11,14 +11,14 @@ import Footer from './components/Footer';
 function App() {
   return (
     <>
-    <Header />
+    
     <switch>
       <Route path="/" exact component={Landing} />
       <Route path="/backtesting" component={Backtesting} />
       <Route path="/inspector_choices" component={Inspector_choices} />
       <Route path="/guide" component={Guide} />
     </switch>
-    <Footer />
+   
     </>
   );
 }
