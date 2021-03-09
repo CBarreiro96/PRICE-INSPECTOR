@@ -2,49 +2,49 @@ import React from 'react'
 
 const TopTickers = () => {
     return (
-        <div className="text-center flex justify-evenly items-center w-full">
-            <div>
-                <h1 className="text-2xl p-2">Top Gainers</h1>
-                <div  className="flex p-2 text-center">
+        <div className="text-center flex justify-evenly items-center w-full bg-red-200 p-2">
+            <div className="bg-gray-500 w-1/3 justify-center  p-2 rounded">
+                <h1 className="text-2xl p-2 bg-gray-300 rounded">Top Gainers</h1>
+                <div  className="flex p-2 justify-evenly">
                     <h2>Ticker #1</h2>
                     <p>24%</p>
                 </div>
-                <div  className="flex p-2">
+                <div  className="flex p-2 justify-evenly">
                     <h2>Ticker #1</h2>
                     <p>24%</p>
                 </div>
-                <div  className="flex  p-2">
+                <div  className="flex p-2 justify-evenly">
                     <h2>Ticker #1</h2>
                     <p>24%</p>
                 </div>
-                <div  className="flex  p-2">
+                <div  className="flex p-2 justify-evenly">
                     <h2>Ticker #1</h2>
                     <p>24%</p>
                 </div>
-                <div className="flex p-2">
+                <div className="flex p-2 justify-evenly">
                     <h2>Ticker #1</h2>
                     <p>24%</p>
                 </div>
             </div>
-            <div>
-                <h1>Top Gainers</h1>
-                <div>
+            <div className="bg-gray-500 w-1/3 justify-center p-2 rounded">
+                <h1 className="text-2xl p-2 bg-gray-300 rounded">Top Gainers</h1>
+                <div  className="flex p-2 justify-evenly">
                     <h2>Ticker #1</h2>
                     <p>24%</p>
                 </div>
-                <div>
+                <div  className="flex p-2 justify-evenly">
                     <h2>Ticker #1</h2>
                     <p>24%</p>
                 </div>
-                <div>
+                <div  className="flex p-2 justify-evenly">
                     <h2>Ticker #1</h2>
                     <p>24%</p>
                 </div>
-                <div>
+                <div  className="flex p-2 justify-evenly">
                     <h2>Ticker #1</h2>
                     <p>24%</p>
                 </div>
-                <div>
+                <div className="flex p-2 justify-evenly">
                     <h2>Ticker #1</h2>
                     <p>24%</p>
                 </div>

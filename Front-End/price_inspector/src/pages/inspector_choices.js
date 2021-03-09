@@ -1,4 +1,5 @@
 import React from 'react'
+import ChoicesBoard from '../components/ChoicesBoard'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import TopTickers from '../components/TopTickers'
@@ -8,6 +9,7 @@ const Inspector_choices = () => {
         <div className="h-screen justify-center items-center">
             <Header />
             <TopTickers />
+            <ChoicesBoard />
             <Footer />
         </div>
     )
