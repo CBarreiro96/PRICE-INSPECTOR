@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../images/logo.png';
+import Logo from '../images/Logo.png';
 
 
 const Headerlanding = () => {
@@ -30,7 +30,7 @@ const Headerlanding = () => {
         <div className={`${isExpanded ? `block` : `hidden`} px-10 w-full block flex-grow lg:flex lg:items-center lg:w-auto`}>
             <div className="text-md lg:flex-grow">
                 <Link className="links" to="#feature">Feature</Link>
-                <Link className="links" to="#How_it_works">How itworks</Link>
+                <Link className="links" to="#How_it_works">How it works</Link>
                 <Link className="links" to="#Our_Team">Our Team</Link>
             </div>
             <div>
@@ -40,7 +40,7 @@ const Headerlanding = () => {
     </nav>
     <div className="bg-gradient-to-t from-navy_blue via-rich_black to-navy_blue w-screen h-screen">
     /*<div className="md:pt-40 sm:pt-20">
-        <img src={logo} alt="Logo" className=" z-0 xs:h20 xs:h=20 sm:h-40 sm:w-40 md:h-80 md:w-80 mx-auto"/>
+        <img src={Logo} alt="Logo" className=" z-0 xs:h20 xs:h=20 sm:h-40 sm:w-40 md:h-80 md:w-80 mx-auto"/>
     </div>
 </div>
 </div>
