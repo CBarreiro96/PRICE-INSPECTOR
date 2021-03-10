@@ -138,4 +138,4 @@ def put_run_backtest():
         abort(400, description="Missing initial_balance")
 
     backtesting = storage.run_backtester(**data)
-    return make_response(jsonify(backtesting, 200))
+    return make_response(backtesting, 200)

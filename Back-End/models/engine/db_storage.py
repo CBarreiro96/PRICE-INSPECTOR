@@ -66,7 +66,7 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
-        self.last_dates = self.last_two_dates()
+        # self.last_dates = self.last_two_dates()
 
     def close(self):
         """call remove() method on the private session attribute"""
@@ -192,13 +192,16 @@ class DBStorage:
         """executes the backtester module"""
         from datetime import datetime, date
         import pandas as pd
-        from modules.backtester import backtester
+        from backtester import backtester
 
         date_format = '%Y-%m-%d'
         initial_date = datetime.strptime(kwargs["initial_date"],
                                          date_format).date()
         final_date = datetime.strptime(kwargs["final_date"],
                                        date_format).date()
+
+        kwargs["initial_date"] = initial_date
+        kwargs["final_date"] = final_date
 
         # query the DB to extract the specific prices
         prices = self.__session.query(Price)
@@ -226,9 +229,9 @@ class DBStorage:
                 kwargs[attr] = value
 
         # query the name of the requested strategy
-        strategy = strategy.name
+        # strategy = strategy.name
 
-        return backtester(df, strategy, **kwargs)
+        return backtester(df, kwargs)
 
     def last_two_dates(self):
         """retrives the most recent two dates from the DB prices table"""
