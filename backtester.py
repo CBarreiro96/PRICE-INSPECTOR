@@ -12,15 +12,20 @@ rentability etc
 
 
 def backtester(data, values):
+    # Assignment of variable
     balance = values['initial_balance']
+    historical_balance = [balance]
     process = 0
     operation = 0
     price_buy = 0
     loss_operation = 0
     profit_operation = 0
+    drawdown_list = []
     n_action = 0
     dict_column = {'date': 0, 'open': 1, 'hight': 2, 'low': 3, 'close': 4, 'volumen': 5, 'tenkan': 7, 'Kijun-sen': 8,
                    'chikou-span': 9, 'senkou-span A': 10, 'senkou-span B': 11, 'buy_sell': 12}
+
+    # Strategy selection
     if values['name'] == 'Ichimoku Kinko Hyo':
         ichimoku(data, values, dict_column)
 
@@ -41,6 +46,7 @@ def backtester(data, values):
         # Sale operation with  the signal of the strategy condition.
         if data.iloc[i, dict_column['buy_sell']] == -1 and process == 1 and ciclo == 0:
             balance = balance + (n_action * data.iloc[i, dict_column['close']])
+            historical_balance.append(balance)
             if round(n_action * data.iloc[i, dict_column['close']]) > price_buy:
                 profit_operation += 1
             else:
@@ -51,8 +57,10 @@ def backtester(data, values):
 
         # Sale operation with stop loss condition
         if n_action != 0 and process == 1 and ciclo == 0 \
-                and round(n_action * data.iloc[i, dict_column['close']]) <= (price_buy - (price_buy * (values['stop_loss']/100))):
+                and round(n_action * data.iloc[i, dict_column['close']]) <= (
+                price_buy - (price_buy * (values['stop_loss'] / 100))):
             balance = round(balance + (n_action * data.iloc[i, dict_column['close']]))
+            historical_balance.append(balance)
             if round(n_action * data.iloc[i, dict_column['close']]) > price_buy:
                 profit_operation += 1
             else:
@@ -65,6 +73,7 @@ def backtester(data, values):
         # Sale when there are enough action pending to sell and it is the final data to show
         if i == (len(data) - 1) and n_action != 0:
             balance = round(balance + (n_action * data.iloc[i, dict_column['close']]))
+            historical_balance.append(balance)
             if round(n_action * data.iloc[i, dict_column['close']]) > price_buy:
                 profit_operation += 1
             else:
@@ -73,6 +82,14 @@ def backtester(data, values):
             process = 0
             ciclo = 1
             data.loc[i, 'Sell'] = 1
+
+    # Drawdown calculation
+    for i in range(1, len(historical_balance)):
+        if historical_balance[i] > historical_balance[i - 1]:
+            max = historical_balance[i]
+        else:
+            max = historical_balance[i - 1]
+        drawdown_list.append((historical_balance[i]/max)-1)
 
     # Length between th final date with the initial date
     Delta_date = values['final_date'] - values['initial_date']
@@ -84,7 +101,8 @@ def backtester(data, values):
               'winning_operation': profit_operation,
               'loss_operation': loss_operation,
               'profit_or_loss': balance - values['initial_balance'],
-              'effectivity_(%)': (profit_operation / operation) * 100}
+              'effectivity_(%)': (profit_operation / operation) * 100,
+              'Max_drawdown_(%)': min(drawdown_list)}
 
     if (balance - values['initial_balance']) >= 0:
         result['rentability'] = ((profit_or_loss / values['initial_balance']) ** (365 / Delta_date.days)) * 100
