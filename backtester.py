@@ -12,6 +12,7 @@ rentability etc
 
 
 def backtester(data, values):
+
     # Assignment of variable
     balance = values['initial_balance']
     historical_balance = [balance]
@@ -92,31 +93,32 @@ def backtester(data, values):
         drawdown_list.append((historical_balance[i]/max)-1)
 
     # Length between th final date with the initial date
-    Delta_date = values['final_date'] - values['initial_date']
+    delta_date = values['final_date'] - values['initial_date']
     profit_or_loss = abs(balance - values['initial_balance'])
 
     # Backtest resume
     result = {'initial_balance': values['initial_balance'],
-              'final_balance': balance, 'n_operations': operation,
-              'winning_operation': profit_operation,
-              'loss_operation': loss_operation,
+              'final_balance': balance,
+              'n_operations': operation,
+              'winning_operations': profit_operation,
+              'loosing_operations': loss_operation,
               'profit_or_loss': balance - values['initial_balance'],
-              'effectivity_(%)': (profit_operation / operation) * 100,
-              'Max_drawdown_(%)': min(drawdown_list)}
+              'effectivity': (profit_operation / operation) ,
+              'max_drawdown': min(drawdown_list)}
 
+    # Rentability calculation
     if (balance - values['initial_balance']) >= 0:
-        result['rentability'] = ((profit_or_loss / values['initial_balance']) ** (365 / Delta_date.days)) * 100
+        result['rentability'] = (((profit_or_loss / values['initial_balance'])+1) ** (365 / delta_date.days)) - 1
     else:
-        result['rentability_(%)'] = -1 * ((profit_or_loss / values['initial_balance']) ** (365 / Delta_date.days)) * 100
+        result['rentability'] = -1 * (((profit_or_loss / values['initial_balance']) ** (365 / delta_date.days)) - 1)
 
     data.index = data['Date']
     json_graph = Graph(data, values)
     mix = []
     resume = json.dumps(result)
-    print(resume)
     mix.append(resume)
     mix.append(json_graph)
-
+    print(json.dumps(mix))
     return json.dumps(mix)
 
 
