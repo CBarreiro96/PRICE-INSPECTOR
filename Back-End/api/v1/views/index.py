@@ -25,4 +25,6 @@ def number_objects():
     for i in range(len(classes)):
         num_objs[names[i]] = storage.count(classes[i])
 
+    num_objs['db_updated_at'] = storage.last_dates['current_date']
+
     return jsonify(num_objs)

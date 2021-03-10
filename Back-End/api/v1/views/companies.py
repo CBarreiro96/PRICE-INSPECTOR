@@ -86,3 +86,14 @@ def put_company(company_id):
             setattr(company, key, value)
     storage.save()
     return make_response(jsonify(company.to_dict()), 200)
+
+
+@app_views.route('/companies/best_5', methods=['GET'],
+                 strict_slashes=False)
+@swag_from('documentation/company/get_best_5.yml', methods=['GET'])
+def get_best_5():
+    """retrives the current 5 companies whose price increase the most comparing
+    its last two prices"""
+
+    storage.best_5_companies()
+    return jsonify("updated")

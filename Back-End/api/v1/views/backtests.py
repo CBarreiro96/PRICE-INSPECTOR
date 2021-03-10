@@ -134,5 +134,8 @@ def put_run_backtest():
     if 'stop_loss' not in data:
         abort(400, description="Missing stop_loss")
 
+    if 'initial_balance' not in data:
+        abort(400, description="Missing initial_balance")
+
     backtesting = storage.run_backtester(**data)
     return make_response(jsonify(backtesting, 200))
