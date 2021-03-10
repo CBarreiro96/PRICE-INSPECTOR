@@ -22,6 +22,7 @@ class DBStorage:
     """interacts with the MySQL database"""
     __engine = None
     __session = None
+    last_dates = None
 
     def __init__(self):
         """Instantiate a DBStorage object"""
@@ -65,6 +66,7 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
+        self.last_dates = self.last_two_dates()
 
     def close(self):
         """call remove() method on the private session attribute"""
@@ -105,10 +107,13 @@ class DBStorage:
 
     def data_feed(self):
         """updates the prices for all companies"""
+        import time
         from datetime import datetime, date, timedelta
         import pytz  # to work with the time zone of New York
         import yfinance as yf
         from numpy import isnan
+
+        start_time = time.time()
 
         end_week = [5]  # 5 for saturday, 6 for sunday
         origin_date = date(2015, 1, 1)  # first date in history for this app
@@ -131,7 +136,6 @@ class DBStorage:
                 last_date = self.__session.query(Price)
                 last_date = last_date.filter_by(company_id=company.id)
                 last_date = last_date.order_by(desc('date')).first().p_date
-                last_date = last_date + timedelta(days=1)
                 history = last_date
                 # print(company.name)
                 # print(history)
@@ -140,12 +144,12 @@ class DBStorage:
 
             # Data has one day delay and is just for working days,
             # data is not updated when yesterday == saturday:
-            if history < today and day_week not in end_week:
+            if history < yesterday and day_week not in end_week:
                 print(company.ticker, history, yesterday)
 
                 # Useof yfinance library to import prices from YahooFinance
                 data = yf.download(company.ticker, start=str(history),
-                                   end=str(yesterday))
+                                   end=str(today))
                 # data = yf.Ticker(company.ticker).history(start=history,
                 #                                         end=today)
 
@@ -180,6 +184,9 @@ class DBStorage:
                         except Exception:
                             pass
             self.__session.commit()
+        self.last_dates = self.last_two_dates()
+        print("--- updated in %s minutes ---"
+              % (time.time() - start_time) / 60)
 
     def run_backtester(self, **kwargs):
         """executes the backtester module"""
@@ -222,3 +229,61 @@ class DBStorage:
         strategy = strategy.name
 
         return backtester(df, strategy, **kwargs)
+
+    def last_two_dates(self):
+        """retrives the most recent two dates from the DB prices table"""
+        from datetime import datetime, date, timedelta
+
+        # query the DB to extract all prices
+        prices_base = self.__session.query(Price)
+        first_price = prices_base.order_by(desc('date')).first()
+
+        current_date = first_price.p_date
+
+        f_company_id = first_price.company_id
+        prices_company = prices_base.filter_by(company_id=f_company_id)
+        before_date = current_date - timedelta(days=10)
+        before_date = prices_company.filter(Price.p_date >= before_date)
+        before_date = before_date.filter(Price.p_date < current_date)
+        before_date = before_date.order_by(desc('date')).first().p_date
+
+        return {"before_date": before_date, "current_date": current_date}
+
+    def best_5_companies(self):
+        """retrives the current 5 companies whose price increase the most
+        comparing its last two prices"""
+        from datetime import datetime, date, timedelta
+        import pandas as pd
+
+        # query the DB to extract all prices
+        prices_base = self.__session.query(Price)
+
+        before_date = self.last_dates["before_date"]
+        current_date = self.last_dates["current_date"]
+
+        # filtering the query to extract the prices for date T-1
+        prices = prices_base.filter(Price.p_date == before_date)
+        prices = prices.all()
+
+        # build the DataFrame with the specific prices
+        fields = ['company_id','p_date', 'p_close']
+        df_before = pd.DataFrame([{f:getattr(p, f) for f in fields}
+                                  for p in prices])
+        df_before.columns = ['company_id', 'date_before', 'close_before']
+
+        # filtering the query to extract the prices for date T-0
+        prices = prices_base.filter(Price.p_date == current_date)
+        prices = prices.all()
+
+        # build the DataFrame with the specific prices
+        df_current = pd.DataFrame([{f: getattr(p, f) for f in fields}
+                                   for p in prices])
+        df_current.columns = ['company_id', 'date_current', 'close_current']
+
+        print(df_before.head())
+        print(df_current.head())
+        df_final = pd.merge(df_before, df_current, on='company_id')
+        df_final['%_var'] = (df_final.close_current / df_final.close_before) -1
+        df_final.sort_values('%_var', ascending=False, inplace=True)
+        print(df_final.head(5))
+        print(df_final.tail(5))
