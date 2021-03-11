@@ -3,7 +3,7 @@ import {TiArrowUpOutline} from 'react-icons/ti';
 import {TiArrowDownOutline} from 'react-icons/ti'
 const TopTickers = () => {
     return (
-        <div className="text-center flex justify-evenly items-center w-full p-2 m-6">
+        <div className="text-center flex justify-evenly items-center w-full p-4 bg-gradient-to-b from-transparent via-gray-200 to-indigo-200">
             <div className="w-1/3 justify-center  p-2 rounded">
                 <h1 className="text-2xl p-2 border-b-2 border-red-900 rounded font-mono shadow-xl mb-2">Top Gainers</h1>
                 <div  className="flex p-2 mb-1 justify-evenly border-b-2 border-green-600 border-opacity-25 bg-opacity-50 shadow-inner rounded hover:bg-gray-100">
