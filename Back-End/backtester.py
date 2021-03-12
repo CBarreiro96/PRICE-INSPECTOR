@@ -11,6 +11,9 @@ rentability etc
 
 
 def backtester(data, values):
+    # Organize Data
+    data = data.set_index('Date').sort_index(ascending=[True])
+    data.reset_index(inplace=True)
 
     # Assignment of variable
     balance = float(values['initial_balance'])
@@ -95,20 +98,14 @@ def backtester(data, values):
     profit_or_loss = abs(balance - float(values['initial_balance']))
 
     # Backtest resume
-    result = {'initial_balance': float(values['initial_balance']),
-              'final_balance': balance,
-              'n_operations': operation,
-              'winning_operations': profit_operation,
-              'loosing_operations': loss_operation,
+    result = {'initial_balance': float(values['initial_balance']), 'final_balance': balance, 'n_operations': operation,
+              'winning_operations': profit_operation, 'loosing_operations': loss_operation,
               'profit_or_loss': balance - float(values['initial_balance']),
-              'effectivity': (profit_operation / operation) ,
-              'max_drawdown': min(drawdown_list)}
+              'effectivity': (profit_operation / operation), 'max_drawdown': min(drawdown_list),
+              'rentability': ((balance / float(values['initial_balance'])) ** (365 / delta_date.days)) - 1}
 
     # Rentability calculation
 
-    result['rentability'] = ((balance/float(values['initial_balance'])) ** (365 / delta_date.days)) - 1
-
-    data.index = data["Date"]
     json_graph = Graph(data, values)
     mix = []
     resume = json.dumps(result)

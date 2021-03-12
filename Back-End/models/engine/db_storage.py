@@ -185,8 +185,8 @@ class DBStorage:
                             pass
             self.__session.commit()
         self.last_dates = self.last_two_dates()
-        print("--- updated in %s minutes ---"
-              % (time.time() - start_time) / 60)
+        #print("--- updated in %s minutes ---"
+        #      % (time.time() - start_time) / 60)
 
     def run_backtester(self, **kwargs):
         """executes the backtester module"""

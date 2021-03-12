@@ -8,20 +8,25 @@ Method with Ichimoku strategy
 
 
 def ichimoku(data, dict_paramater, dict_column):
+    # Variable declaration
+    tenkan_lookback = int(dict_paramater['param_0_value'])
+    kijun_sen_lookback = int(dict_paramater['param_1_value'])
+
     for i in range(len(data)):
         try:
 
             # Tenkan trend
-            if (i + int(dict_paramater['param_0_value'])) <= len(data) - 1:
-                data.loc[(i + int(dict_paramater['param_0_value'])), 'Tenkan'] = \
-                    (data.iloc[i:(i + int(dict_paramater['param_0_value'])), dict_column['hight']].max() +
-                     data.iloc[i:(i + int(dict_paramater['param_0_value'])), dict_column['low']].min()) / 2
+            if (i + tenkan_lookback) <= len(data) - 1:
+                data.loc[(i + tenkan_lookback), 'Tenkan'] = (data.iloc[i:(i + tenkan_lookback),
+                                                             dict_column['hight']].max() + data.iloc[
+                                                                                           i:(i + tenkan_lookback),
+                                                                                           dict_column['low']].min()) / 2
 
             # Kijun-sen trend
-            if (i + int(dict_paramater['param_1_value'])) <= len(data) - 1:
-                data.loc[(i + int(dict_paramater['param_1_value'])), 'Kijun-sen'] = \
-                    (data.iloc[i:(i + int(dict_paramater['param_1_value'])), dict_column['hight']].max() +
-                     data.iloc[i:(i + int(dict_paramater['param_1_value'])), dict_column['low']].min()) / 2
+            if (i + kijun_sen_lookback) <= len(data) - 1:
+                data.loc[(i + kijun_sen_lookback), 'Kijun-sen'] = (data.iloc[i:(i + kijun_sen_lookback),
+                                                                   dict_column['hight']].max() + data.iloc[i:(i + kijun_sen_lookback),
+                                                                                                 dict_column['low']].min()) / 2
         except ValueError:
             pass
 
@@ -33,10 +38,10 @@ def ichimoku(data, dict_paramater, dict_column):
                 data.loc[i, 'Chikou-span'] = data.iloc[(i + int(dict_paramater['param_2_value'])),
                                                        dict_column['close']]
             # Senkou-span A
-            if (i + (int(dict_paramater['param_3_value']) + int(dict_paramater['param_1_value']))) <= len(
+            if (i + (int(dict_paramater['param_3_value']) + kijun_sen_lookback)) <= len(
                     data) - 1:
-                data.loc[(i + (int(dict_paramater['param_3_value']) + int(dict_paramater['param_1_value']))),
-                         'Senkou-span A'] = (data.iloc[(i + int(dict_paramater['param_1_value'])),
+                data.loc[(i + (int(dict_paramater['param_3_value']) + kijun_sen_lookback)),
+                         'Senkou-span A'] = (data.iloc[(i + kijun_sen_lookback),
                                                        dict_column['tenkan']] +
                                              data.iloc[(i + int(dict_paramater['param_1_value'])),
                                                        dict_column['Kijun-sen']]) / 2
