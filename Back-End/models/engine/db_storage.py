@@ -22,7 +22,8 @@ class DBStorage:
     """interacts with the MySQL database"""
     __engine = None
     __session = None
-    last_dates = None
+    last_dates = None  # stores the last two prices dates
+    ranking = []  # stores the most recent company ranking
 
     def __init__(self):
         """Instantiate a DBStorage object"""
@@ -66,7 +67,11 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
-        # self.last_dates = self.last_two_dates()
+        try:
+            self.last_dates = self.last_two_dates()
+            self.ranking = self.company_ranking()
+        except Exception:
+            pass
 
     def close(self):
         """call remove() method on the private session attribute"""
@@ -99,11 +104,6 @@ class DBStorage:
             count = len(models.storage.all(cls).values())
 
         return count
-
-    def last_date(self):
-        """Returns the last date of prices avilable"""
-        last_date = self.__session.query(Price).order_by(desc('date')).first()
-        return last_date.p_date
 
     def data_feed(self):
         """updates the prices for all companies"""
@@ -185,14 +185,14 @@ class DBStorage:
                             pass
             self.__session.commit()
         self.last_dates = self.last_two_dates()
+        self.ranking = self.company_ranking()
         #print("--- updated in %s minutes ---"
         #      % (time.time() - start_time) / 60)
 
-    def run_backtester(self, **kwargs):
-        """executes the backtester module"""
+    def prepare_data(self, **kwargs):
+        """prepares the data to run the backtester or a strategy"""
         from datetime import datetime, date
         import pandas as pd
-        from backtester import backtester
 
         date_format = '%Y-%m-%d'
         initial_date = datetime.strptime(kwargs["initial_date"],
@@ -218,6 +218,8 @@ class DBStorage:
         df.columns = ['Date', 'Open', 'High', 'Low',
                       'Close', 'Volume', 'Adj_Close']
 
+        df.sort_values('Date', ascending=True, inplace=True)
+
         # query the requested strategy
         strategy = self.__session.query(Strategy)
         strategy = strategy.filter(Strategy.id == kwargs["strategy_id"])
@@ -231,11 +233,20 @@ class DBStorage:
         # query the name of the requested strategy
         # strategy = strategy.name
 
+        return [df, kwargs]
+
+    def run_backtester(self, **kwargs):
+        """executes the backtester module"""
+        from backtester import backtester
+
+        data = self.prepare_data(**kwargs)
+        df = data[0]
+        kwargs = data[1]
         return backtester(df, kwargs)
 
     def last_two_dates(self):
         """retrives the most recent two dates from the DB prices table"""
-        from datetime import datetime, date, timedelta
+        from datetime import timedelta
 
         # query the DB to extract all prices
         prices_base = self.__session.query(Price)
@@ -252,10 +263,9 @@ class DBStorage:
 
         return {"before_date": before_date, "current_date": current_date}
 
-    def best_5_companies(self):
-        """retrives the current 5 companies whose price increase the most
-        comparing its last two prices"""
-        from datetime import datetime, date, timedelta
+    def company_ranking(self):
+        """retrives the current 5 companies whose price increase and decrease
+        the most comparing its last two prices"""
         import pandas as pd
 
         # query the DB to extract all prices
@@ -283,10 +293,70 @@ class DBStorage:
                                    for p in prices])
         df_current.columns = ['company_id', 'date_current', 'close_current']
 
-        print(df_before.head())
-        print(df_current.head())
         df_final = pd.merge(df_before, df_current, on='company_id')
-        df_final['%_var'] = (df_final.close_current / df_final.close_before) -1
-        df_final.sort_values('%_var', ascending=False, inplace=True)
-        print(df_final.head(5))
-        print(df_final.tail(5))
+        df_final['var'] = (df_final.close_current / df_final.close_before) -1
+        df_final.sort_values('var', ascending=False, inplace=True)
+
+        df_best = df_final.head(5).copy()
+        df_worst = df_final.tail(5).copy()
+
+        best = {}
+        for i in range(len(df_best)):
+            best[self.get(Company, df_best.iloc[i, 0]).
+                 name] = df_best.iloc[i, 5]
+
+        worst = {}
+        for i in range(len(df_worst)):
+            worst[self.get(Company, df_worst.iloc[i,0]).
+                  name] = df_worst.iloc[i, 5]
+
+        return [best, worst]
+
+    def recomendations(self, strategy_id, companies_ids):
+        """retrives a dictionary with the last price and trading
+        signal for each company_id received and given strategy"""
+        from datetime import timedelta
+        from ichimoku import ichimoku
+        from numpy import isnan
+
+        # to be able to work with ichimoku strategy:
+        dict_column = {'date': 0, 'open': 1, 'hight': 2, 'low': 3,
+                       'close': 4, 'volumen': 5, 'tenkan': 7,
+                       'Kijun-sen': 8, 'chikou-span': 9,
+                       'senkou-span A': 10, 'senkou-span B': 11,
+                       'buy_sell': 12}
+        kwargs = {}
+
+        current_date = self.last_dates["current_date"]
+        kwargs['initial_date'] = str(current_date - timedelta(days=365))
+        kwargs['final_date'] = str(current_date)
+        kwargs['strategy_id'] = strategy_id
+
+        recom_dict = {}
+
+        for company_id in companies_ids:
+            company_dict = {}
+            instance = self.get(Company, company_id)
+            company_dict['ticker'] = instance.ticker
+            kwargs['company_id'] = company_id
+            data = self.prepare_data(**kwargs)
+            df = data[0]
+            values = data[1]
+
+            # Strategy selection
+            if values['name'] == 'Ichimoku Kinko Hyo':
+                ichimoku(df, values, dict_column)
+
+            # reading the last trading signal:
+            # 1 for Buy, -1 for Sell and 0 for Hold
+            try:
+                signal = df.iloc[len(df) - 1, dict_column['buy_sell']]
+            except Exception:
+                signal = 0
+            if isnan(signal):
+                signal = 0
+
+            company_dict['signal'] = signal
+            recom_dict[company_id] = company_dict
+
+        return recom_dict
