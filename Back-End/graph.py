@@ -1,20 +1,19 @@
-from datetime import datetime
+from datetime import datetime, date
 from bokeh.plotting import figure, output_file, show
 from bokeh.embed import json_item
+import pandas as pd
 import json
 from math import pi
 
 
 def Graph(data, values):
+    data.index = data["Date"]
     inc = data.Close > data.Open
     dec = data.Open > data.Close
     w = 12 * 60 * 60 * 1000  # half day in ms
 
-    TOOLS = "pan,wheel_zoom,box_zoom,reset,save"
-
     # Graphics parameters in bokeh
-    p = figure(x_axis_type="datetime", tools=TOOLS, plot_width=1000,
-               x_range=(datetime(2020, 6, 5), values['final_date']), title="Ichimoku")
+    p = figure(x_axis_type="datetime", plot_width=1000, title="Ichimoku")
     p.xaxis.major_label_orientation = pi / 4
     p.grid.grid_line_alpha = 0.3
 
