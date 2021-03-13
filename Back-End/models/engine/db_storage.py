@@ -23,6 +23,7 @@ class DBStorage:
     __engine = None
     __session = None
     last_dates = None
+    ranking = []
 
     def __init__(self):
         """Instantiate a DBStorage object"""
@@ -66,7 +67,11 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
-        # self.last_dates = self.last_two_dates()
+        try:
+            self.last_dates = self.last_two_dates()
+            self.ranking = self.company_ranking()
+        except Exception:
+            pass
 
     def close(self):
         """call remove() method on the private session attribute"""
@@ -185,6 +190,7 @@ class DBStorage:
                             pass
             self.__session.commit()
         self.last_dates = self.last_two_dates()
+        self.ranking = self.company_ranking()
         #print("--- updated in %s minutes ---"
         #      % (time.time() - start_time) / 60)
 
@@ -252,9 +258,10 @@ class DBStorage:
 
         return {"before_date": before_date, "current_date": current_date}
 
-    def best_5_companies(self):
-        """retrives the current 5 companies whose price increase the most
-        comparing its last two prices"""
+    def company_ranking(self):
+        """retrives the current 5 companies whose price increase and decrease
+        the most comparing its last two prices"""
+
         from datetime import datetime, date, timedelta
         import pandas as pd
 
@@ -283,10 +290,21 @@ class DBStorage:
                                    for p in prices])
         df_current.columns = ['company_id', 'date_current', 'close_current']
 
-        print(df_before.head())
-        print(df_current.head())
         df_final = pd.merge(df_before, df_current, on='company_id')
-        df_final['%_var'] = (df_final.close_current / df_final.close_before) -1
-        df_final.sort_values('%_var', ascending=False, inplace=True)
-        print(df_final.head(5))
-        print(df_final.tail(5))
+        df_final['var'] = (df_final.close_current / df_final.close_before) -1
+        df_final.sort_values('var', ascending=False, inplace=True)
+
+        df_best = df_final.head(5).copy()
+        df_worst = df_final.tail(5).copy()
+
+        best = {}
+        for i in range(len(df_best)):
+            best[self.get(Company,df_best.iloc[i, 0]).
+                 name] = df_best.iloc[i, 5]
+
+        worst = {}
+        for i in range(len(df_worst)):
+            worst[self.get(Company,df_worst.iloc[i,0]).
+                  name] = df_worst.iloc[i, 5]
+
+        return [best, worst]
