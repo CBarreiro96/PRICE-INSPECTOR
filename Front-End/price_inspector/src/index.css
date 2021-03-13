@@ -2,3 +2,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Login page */
+
+.form_imput {
+  @apply h-10 px-2 w-full rounded mt-2 focus:outline-none shadow
+}
+
+.nav_1 {
+  @apply fixed z-50 w-full  top-0 flex flex-wrap items-center justify-between px-2 py-3  shadow-lg text-white
+}
+
+.nav_2 {
+  @apply fixed z-50 w-full top-0 flex flex-wrap items-center justify-between px-2 py-3 shadow-lg bg-white text-black
+}
+
+.links {
+  @apply block mt-4 mx-14 lg:inline-block lg:mt-0 mr-4 hover:underline
+}
+
+

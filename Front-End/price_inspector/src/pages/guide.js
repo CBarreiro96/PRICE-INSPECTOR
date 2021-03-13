@@ -1,13 +1,18 @@
 import React from 'react'
-import App from '../components/AdvancedOptions'
+import Header from '../components/Header'
+import Slider from '../components/Slider'
+import BasicConcepts from '../components/Concepts'
 
 
 const Guide = () => {
+
     return (
-        <div className="h-screen bg-yellow-300 flex justify-center items-center" >
-            <App />
-        </div>
+        <>
+        <Header/>
+        <BasicConcepts/>
+        <Slider/>
+        </>
     )
 }
 
-export default Guide
+export default Guide;

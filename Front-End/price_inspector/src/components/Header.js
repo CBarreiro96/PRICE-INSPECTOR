@@ -1,24 +1,31 @@
 import React from 'react'
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../images/logo_2.png';
+import Logo_name from '../images/Logo_name.png'
+
 
 
 const Header = ({toggle}) => {
+
+    // Responsive
+    const [isExpanded, toggleExpansion] = useState(false);
+
+
     return (
-        <nav className="flex justify-between items-center h-20 bg-gray-800 text-gray-200 relative shadow-sm font-mono" role="navigation">
-            <Link to="/"><img src={logo} className="h-48 w-auto ml-12"alt="logo"/></Link>
-            <div className="px-4 cursor-pointer md:hidden" onClick={toggle}>
-            <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/>
-</svg>
-</div>
-<div className="pr-8 md:block hidden">
-    <Link className="px-4 hover:underline" to="/backtesting">Backtesting</Link>
-    <Link className="px-4 hover:underline" to="/inspector_choices">Inspector Choices</Link>
-    <Link className="px-4 hover:underline" to="/guide">Guide</Link>
-    <Link className="px-4 hover:underline" to="/account">Your Account</Link>
-</div>
-</nav>)
+    <nav className="flex fixed  bg-blue-900 justify-between items-center h-16 bg-rich_black  w-full shadow-2xl z-10" role="navigation">
+        <Link to="/"><img src={Logo_name} className="h-14 w-auto ml-12" alt="Logo name"/></Link>
+        <div className="block lg:hidden">
+            <button className="flex items-center px-3 py-2 border border-nianza rounded" onClick={() => toggleExpansion(!isExpanded)}>
+                <svg className="fill-current h-3 w-3 bg-nianza" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
+            </button>
+        </div>
+        <div className={`${isExpanded ? `block` : `hidden`} pr-8 md:block text-nianza`}>
+            <Link className="px-4 text-base hover:underline" to="/backtesting">Backtesting</Link>
+            <Link className="px-4 text-base hover:underline" to="/inspector_choices">Inspector Choices</Link>
+            <Link className="px-4 text-base hover:underline" to="/guide">Guide</Link>
+            <Link className="px-4 text-base hover:underline" to="/account">Your Account</Link>
+        </div>
+    </nav>)
 }
 
 export default Header;

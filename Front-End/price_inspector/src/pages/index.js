@@ -1,17 +1,20 @@
 import React from 'react'
-import Content from '../components/Content';
+import Headerlanding from '../components/Headerlanding';
+import Feature from '../components/Feature';
+import Team from '../components/Team';
 
 
 const Landing = () => {
     return (
-        <div>
-            <Content />
-       </div>
-    )
+        <>
+            <Headerlanding/>
+            <Feature/>
+            <Team/>
+        </>
+)
 }
 
 export default Landing;
 /*
-<content>
 <footer >
 */

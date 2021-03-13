@@ -7,13 +7,14 @@ import Graph from '../components/AdvancedOptions';
 
 const Backtesting = () => {
     return (
-        
+        <>
         <div className="h-screen justify-center items-center">
             <Header />
             <BacktestingContent />
             <BacktestResults />
             <Footer />
         </div>
+        </>
     )
 }
 
