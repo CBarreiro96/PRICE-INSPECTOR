@@ -4,9 +4,12 @@ import Landing from './pages';
 import Backtesting from './pages/backtesting';
 import Inspector_choices from './pages/inspector_choices';
 import Guide from './pages/guide';
+<<<<<<< HEAD
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import Footer from './components/Footer';
+=======
+>>>>>>> master
 
 
 function App() {

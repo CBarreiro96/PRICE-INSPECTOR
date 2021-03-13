@@ -1,7 +1,11 @@
 import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+<<<<<<< HEAD
 import Logo_name from '../images/Logo_name.png'
+=======
+import logo from '../images/logo_2.png';
+>>>>>>> master
 
 
 const Header = ({toggle}) => {

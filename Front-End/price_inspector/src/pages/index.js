@@ -4,7 +4,7 @@ import Feature from '../components/Feature';
 import Team from '../components/Team';
 
 
-const Landing = (toggle) => {
+const Landing = () => {
     return (
         <>
             <Headerlanding/>

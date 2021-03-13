@@ -1,0 +1,2 @@
+#!/bin/bash
+curl POST http://0.0.0.0:5000/api/v1/strategies/ -H "Content-Type: application/json" -d '{"name": "Ichimoku Kinko Hyo", "param_0_name": "tenkan_lookback", "param_0_value": "9", "param_1_name": "kijun_sen_lookback", "param_1_value": "26", "param_2_name": "chikou_span_lookback", "param_2_value": "26", "param_3_name": "senkou_span_A_projection", "param_3_value": "26", "param_4_name": "senkou_span_B_lookback", "param_4_value": "52", "param_5_name": "senkou_span_B_projection", "param_5_value": "26"}' -vvv
