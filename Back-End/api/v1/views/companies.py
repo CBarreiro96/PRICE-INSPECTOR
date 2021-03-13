@@ -94,5 +94,29 @@ def put_company(company_id):
 def get_best_worst():
     """retrives the current 5 companies whose price increase and decrease
     the most comparing its last two prices"""
-
     return make_response(jsonify(storage.ranking), 200)
+
+
+@app_views.route('/companies/recomendations', methods=['PUT'],
+                 strict_slashes=False)
+@swag_from('documentation/company/put_recomendations.yml', methods=['PUT'])
+def put_recomendations():
+    """retrives a dictionary with the ticker and trading
+        signal for each company_id received and given strategy"""
+    import json
+
+    data = request.get_json()
+    if not data:
+        abort(400, description="Not a JSON")
+
+    if 'strategy_id' not in data:
+        abort(400, description="Missing strategy_id")
+
+    if 'companies_ids' not in data:
+        abort(400, description="Missing companies_ids")
+
+    companies_ids = json.loads(data['companies_ids'])
+    recom = storage.recomendations(data['strategy_id'],
+                           companies_ids)
+
+    return make_response(jsonify(recom), 200)

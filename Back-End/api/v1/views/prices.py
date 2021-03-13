@@ -108,4 +108,4 @@ def get_update():
 @swag_from('documentation/price/last_date.yml', methods=['GET'])
 def get_last_date():
     """Retrives the last date of the prices"""
-    return jsonify(str(storage.last_date()))
+    return jsonify(str(storage.last_dates["current_date"]))
