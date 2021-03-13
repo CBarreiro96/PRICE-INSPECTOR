@@ -5,21 +5,21 @@ import Backtesting from './pages/backtesting';
 import Inspector_choices from './pages/inspector_choices';
 import Guide from './pages/guide';
 import Login from './pages/Login'
-import SingUp from './pages/SignUp'
+import SignUp from './pages/SignUp'
 import Footer from './components/Footer';
 
 
 function App() {
   return (
     <>
-    <switch>
+    <Switch>
       <Route path="/" exact component={Landing} />
       <Route path="/backtesting" component={Backtesting} />
       <Route path="/inspector_choices" component={Inspector_choices} />
       <Route path="/guide" component={Guide} />
       <Route path="/login" component={Login}/>
-      <Route path="/SingUp" component={SingUp}/>
-    </switch>
+      <Route path="/SignUp" component={SignUp}/>
+    </Switch>
     <Footer />
     </>
   );

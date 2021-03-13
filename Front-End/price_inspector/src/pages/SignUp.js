@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const SingUp = () => {
+const SignUp = () => {
   let form = (null);
   const handleSubmit = (event) => {
 		event.preventDefault();
@@ -55,4 +55,4 @@ const SingUp = () => {
 	);
 };
 
-export default SingUp;
+export default SignUp;

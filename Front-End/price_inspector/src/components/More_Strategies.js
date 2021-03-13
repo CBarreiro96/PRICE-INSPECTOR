@@ -22,7 +22,7 @@ const MoreStrategies = () => {
 				</div>
 
         {/*YOUR_BACK_COMPONENT*/}
-				<div className="h-screen">
+				<div>
 					<div className="h-2/3 w-1/2 mx-auto pt-2 sm:pt-5 overflow-auto flex-grow bg-steal_teal rounded-3xl shadow-2xl items-center text-center">
           	<button className="text-xl sm:text-3xl my-2 sm:my-5 hover:underline" onClick={handleClick}>COMING SOON</button>
 						<p className="px-2 pt-10 sm:px-16 sm:text-2xl text-sm">

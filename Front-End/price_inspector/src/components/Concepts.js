@@ -9,17 +9,17 @@ import Percent from "../images/Percent.svg";
 const BasicConcepts = () => {
 
 	return (
-		<div>
+		<div className="pt-16">
 			{/* Title */}
-			<h1 className="text-center text-4xl sm:text-6xl py-5">
+			<h1 className="text-center text-4xl sm:text-6xl py-5 ">
 				Basic Concepts
 			</h1>
-			<section className="flex flex-row flex-wrap mx-auto">
+			<section className="flex flex-row flex-wrap mx-auto ">
 				{/* Tiker Card */}
 				<div className="flex w-full px-4 py-5 md:w-1/2 lg:w-1/3">
-					<div className="flex flex-col min-h-full pb-4 mb-6 bg-lime_green rounded-3xl shadow-lg hover:shadow-2xl">
+					<div className="flex flex-col  pb-4 mb-6 bg-lime_green rounded-3xl shadow-lg hover:shadow-2xl">
 						<div className="">
-							<img className="w-full h-24 sm:h-28 mt-2" src={Search_Dolar} alt="Tiker"/>
+							<img className="w-full h-20 sm:h-24 my-2" src={Search_Dolar} alt="Tiker"/>
       			</div>
 						<div className="flex flex-wrap items-center flex-1 px-4 text-center mx-auto">
 							<h2 className="text-2xl sm:text-3xl font-bold">
@@ -35,9 +35,9 @@ const BasicConcepts = () => {
   			</div>
 				{/* Backtesting Card */}
 				<div className="flex w-full px-4 py-5 md:w-1/2 lg:w-1/3">
-					<div className="flex flex-col min-h-full pb-4 mb-6 bg-flickr_pink rounded-3xl shadow-lg hover:shadow-2xl">
+					<div className="flex flex-col  pb-4 mb-6 bg-flickr_pink rounded-3xl shadow-lg hover:shadow-2xl">
 						<div className="">
-							<img className="w-full h-24 sm:h-28 mt-2" src={Eye} alt="Alert"/>
+							<img className="w-full h-20 sm:h-24 my-2" src={Eye} alt="Alert"/>
       			</div>
 						<div className="flex flex-wrap items-center flex-1 px-4 text-center mx-auto">
 							<h2 className="text-2xl sm:text-3xl font-bold">
@@ -53,9 +53,9 @@ const BasicConcepts = () => {
   			</div>
 				{/* Cost effectiveness Card */}
 				<div className="flex w-full px-4 py-5 md:w-1/2 lg:w-1/3">
-					<div className="flex flex-col min-h-full pb-4 mb-6 bg-lime_green rounded-3xl shadow-lg hover:shadow-2xl">
+					<div className="flex flex-col  pb-4 mb-6 bg-lime_green rounded-3xl shadow-lg hover:shadow-2xl">
 						<div className="">
-							<img className="w-full h-24 sm:h-28 mt-2" src={Balance_Scale} alt="Tiker"/>
+							<img className="w-full h-20 sm:h-24 my-2" src={Balance_Scale} alt="Tiker"/>
       			</div>
 						<div className="flex flex-wrap items-center flex-1 px-4 text-center mx-auto">
 							<h2 className="text-2xl sm:text-3xl font-bold">
@@ -71,9 +71,9 @@ const BasicConcepts = () => {
   			</div>
 				{/* Drawdown Card */}
 				<div className="flex w-full px-4 py-5 md:w-1/2 lg:w-1/3">
-					<div className="flex flex-col min-h-full pb-4 mb-6 bg-flickr_pink rounded-3xl shadow-lg hover:shadow-2xl">
+					<div className="flex flex-col  pb-4 mb-6 bg-flickr_pink rounded-3xl shadow-lg hover:shadow-2xl">
 						<div className="">
-							<img className="w-full h-24 sm:h-28 mt-2" src={Chart_line} alt="Tiker"/>
+							<img className="w-full h-20 sm:h-24 my-2" src={Chart_line} alt="Tiker"/>
       			</div>
 						<div className="flex flex-wrap items-center flex-1 px-4 text-center mx-auto">
 							<h2 className="text-2xl sm:text-3xl font-bold">
@@ -89,9 +89,9 @@ const BasicConcepts = () => {
   			</div>
 				{/* Effectiveness Card */}
 				<div className="flex w-full px-4 py-5 md:w-1/2 lg:w-1/3">
-					<div className="flex flex-col min-h-full pb-4 mb-6 bg-lime_green rounded-3xl shadow-lg hover:shadow-2xl">
+					<div className="flex flex-col  pb-4 mb-6 bg-lime_green rounded-3xl shadow-lg hover:shadow-2xl">
 						<div className="">
-							<img className="w-full h-24 sm:h-28 mt-2" src={Percent} alt="Tiker"/>
+							<img className="w-full h-20 sm:h-24 my-2" src={Percent} alt="Tiker"/>
       			</div>
 						<div className="flex flex-wrap items-center flex-1 px-4 text-center mx-auto">
 							<h2 className="text-2xl sm:text-3xl font-bold">
@@ -106,9 +106,9 @@ const BasicConcepts = () => {
     			</div>
   			</div>
 				<div className="flex w-full px-4 py-5 md:w-1/2 lg:w-1/3">
-					<div className="flex flex-col min-h-full pb-4 mb-6 bg-flickr_pink rounded-3xl shadow-lg hover:shadow-2xl">
+					<div className="flex flex-col  pb-4 mb-6 bg-flickr_pink rounded-3xl shadow-lg hover:shadow-2xl">
 						<div className="">
-							<img className="w-full h-24 sm:h-28 mt-2" src={Alert} alt="Alert"/>
+							<img className="w-full h-20 sm:h-24 my-2" src={Alert} alt="Alert"/>
       			</div>
 						<div className="flex flex-wrap items-center flex-1 px-4 text-center mx-auto">
 							<h2 className="text-2xl sm:text-3xl font-bold">

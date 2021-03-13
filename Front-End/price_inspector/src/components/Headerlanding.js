@@ -1,7 +1,8 @@
 import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../images/Logo.png';
+import Trading from '../images/Trading.mp4'
+import Trading_2 from '../images/Trading_2.mp4'
 
 
 const Headerlanding = () => {
@@ -20,7 +21,7 @@ const Headerlanding = () => {
     const [isExpanded, toggleExpansion] = useState(false);
 
     return (
-        <div>
+        <div className="flex-grow">
             <nav className={navbar ? 'nav_2' : 'nav_1'}>
                 <div className="block lg:hidden">
                     <button className="flex items-center px-3 py-2 border rounded" onClick={() => toggleExpansion(!isExpanded)}>
@@ -28,26 +29,32 @@ const Headerlanding = () => {
                     </button>
                 </div>
                 <div className={`${isExpanded ? `block` : `hidden`} px-10 w-full block flex-grow lg:flex lg:items-center lg:w-auto`}>
-                    <div className="text-md lg:flex-grow">
-                        <Link className="links" to="#feature">Feature</Link>
-                        <Link className="links" to="#How_it_works">How it works</Link>
-                        <Link className="links" to="#Our_Team">Our Team</Link>
+                    <div className="text-md lg:flex-grow font-medium">
+                        <a className="links" href="#Feature">Feature</a>
+                        <a className="links" href="#How_it_works">How It Works</a>
+                        <a className="links" href="#Our_Team">Our Team</a>
                     </div>
                 <div>
-                    <Link className="inline-block text-md px-4 py-2 leading-none border rounded  hover:tebg-gradient-to-r from-rich_black to-navy_blue-DEFAUL hover:bg-nianza mt-4 lg:mt-0" to="/login">
+                    <Link className="inline-block text-md px-4 py-2 leading-none border rounded hover:text-rich_black hover:bg-nianza mt-4 lg:mt-0" to="/login">
                         Log in
                     </Link>
                 </div>
                 </div>
             </nav>
-            <div className="flex-wrap bg-gradient-to-t from-navy_blue via-rich_black to-navy_blue w-screen h-screen">
-                <div className="pt-24 h-3/4 text-2xl sm:text-6xl text-center">
-                    <img src={Logo} alt="Logo" className=" z-0 mx-auto h-full"/>
-                    <h1 className="mt-5 sm:mt-10">BACKTEST AN INVESMENT STRATEGY</h1>
+            <div className="flex h-screen mx-auto p-0 m-0 ">
+            <div className="absolute h-full">
+                <video autoPlay loop muted>
+                    <source src={Trading}/>
+                </video>
+            </div>
+            <div className="absolute h-screen w-full p-0 m-0">
+                <div className=" w-full my-28 md:my-60 mx-auto text-center bg-black opacity-80">
+                    <h1 className="text-3xl sm:text-5xl lg:text-6xl py-2 font-bold italic font-mono text-white">BACKTEST YOUR INVESMENT STRATEGY</h1>
                 </div>
+            </div>
             </div>
         </div>
     )
-}
+};
 
 export default Headerlanding;

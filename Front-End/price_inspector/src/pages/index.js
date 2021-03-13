@@ -1,12 +1,15 @@
 import React from 'react'
 import Headerlanding from '../components/Headerlanding';
-import Content from '../components/Content';
+import Feature from '../components/Feature';
+import Team from '../components/Team';
+
 
 const Landing = (toggle) => {
     return (
         <>
             <Headerlanding/>
-            /*<Content/>*/
+            <Feature/>
+            <Team/>
         </>
 )
 }

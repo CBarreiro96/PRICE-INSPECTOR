@@ -47,10 +47,10 @@ const Login = () => {
                         </p>
                     </div>
                     <div className="px-2">
-                        <button className="w-full bg-lime_green rounded px-8 py-3 text-sm mt-6">Login</button>
+                        <button className="w-full bg-lime_green rounded px-8 py-3 text-lg mt-6">Login</button>
                         <p className="mt-16 text-s text-center">
                             Don’t Have An Account?{" "}
-                            <Link className="underline" to="/SingUp">Sign Up</Link>
+                            <Link className="underline" to="/SignUp">Sign Up</Link>
                         </p>
                     </div>
                 </form>
