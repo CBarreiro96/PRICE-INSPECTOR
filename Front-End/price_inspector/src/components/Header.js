@@ -1,11 +1,8 @@
 import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD
 import Logo_name from '../images/Logo_name.png'
-=======
-import logo from '../images/logo_2.png';
->>>>>>> master
+
 
 
 const Header = ({toggle}) => {
@@ -15,7 +12,7 @@ const Header = ({toggle}) => {
 
 
     return (
-    <nav className="flex fixed justify-between items-center h-16 bg-rich_black  w-full shadow-2xl z-10" role="navigation">
+    <nav className="flex fixed  bg-blue-900 justify-between items-center h-16 bg-rich_black  w-full shadow-2xl z-10" role="navigation">
         <Link to="/"><img src={Logo_name} className="h-14 w-auto ml-12" alt="Logo name"/></Link>
         <div className="block lg:hidden">
             <button className="flex items-center px-3 py-2 border border-nianza rounded" onClick={() => toggleExpansion(!isExpanded)}>
