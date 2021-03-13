@@ -2,8 +2,8 @@ import React from 'react'
 
 const BacktestResults = () => {
     return (
-        <div className="flex flex-col justify-center items-center p-6 bg-gray-700 w-full">
-            <h2 className="text-3xl p-2 text-white">Results</h2>
+        <div className="flex flex-col justify-center items-center p-6 bg-gradient-to-t from-transparent via-green-400 to-green-700 w-full">
+            <h2 className="text-2xl p-2 border-2 border-red-900 rounded font-mono shadow-2xl mb-2">Results</h2>
             <table className="w-2/3 text-center">
                 <tr className="bg-gray-400 p-4">
                 <th>Parameter</th>
@@ -38,7 +38,7 @@ const BacktestResults = () => {
                     <td className="text-center">12%</td>
                 </tr>
                 <tr className="bg-gray-400">
-                    <td>Dropdown</td>
+                    <td>Drowdown</td>
                     <td className="text-center">20</td>
                 </tr>
                 <tr className="table-row bg-gray-200">

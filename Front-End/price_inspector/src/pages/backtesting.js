@@ -11,7 +11,6 @@ const Backtesting = () => {
         <div className="h-screen justify-center items-center">
             <Header />
             <BacktestingContent />
-            <Graph />
             <BacktestResults />
             <Footer />
         </div>
