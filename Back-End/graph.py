@@ -13,7 +13,7 @@ def Graph(data, values):
     w = 12 * 60 * 60 * 1000  # half day in ms
 
     # Graphics parameters in bokeh
-    p = figure(x_axis_type="datetime", plot_width=1000, title="Ichimoku")
+    p = figure(x_axis_type="datetime", plot_width=800, plot_height=600, title="Ichimoku")
     p.xaxis.major_label_orientation = pi / 4
     p.grid.grid_line_alpha = 0.3
 
@@ -24,11 +24,10 @@ def Graph(data, values):
 
     # figure lines of the strategy parameters
     p.line(data.loc[values['initial_date']:values['final_date'], 'Date'],
-           data.loc[values['initial_date']:values['final_date'], 'Tenkan'], legend_label="Tenkan", line_color="orange",
-           line_dash="4 4", line_width=2)
+           data.loc[values['initial_date']:values['final_date'], 'Tenkan'], legend_label="Tenkan", line_color="orange", line_width=2)
     p.line(data.loc[values['initial_date']:values['final_date'], 'Date'],
            data.loc[values['initial_date']:values['final_date'], 'Kijun-sen'], legend_label="Kijun-sen",
-           line_color="green", line_dash="4 4", line_width=2)
+           line_color="green", line_width=2)
     p.line(data.loc[values['initial_date']:values['final_date'], 'Date'],
            data.loc[values['initial_date']:values['final_date'], 'Chikou-span'], legend_label="Chikou-span",
            line_color="purple", line_dash="4 4", line_width=2)
@@ -53,6 +52,6 @@ def Graph(data, values):
                y=data[(data['Sell'] == 1)].loc[values['initial_date']:values['final_date'], 'Close'] + 7, size=5,
                color="red",
                line_width=2)
-    output_file('graph.html')
+    output_file('graph2.html')
     show(p)
     return json.dumps(json_item(p, "myplot"))
