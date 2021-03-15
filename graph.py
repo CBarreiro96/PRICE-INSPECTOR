@@ -1,9 +1,13 @@
 from datetime import datetime, date
 from bokeh.plotting import figure, output_file, show
 from bokeh.embed import json_item
-import pandas as pd
 import json
 from math import pi
+
+'''
+It is graph method, in this method all the trend lines are graphed with 
+the buy and sell signals of the ichimoku strategy
+'''
 
 
 def Graph(data, values):
@@ -42,7 +46,7 @@ def Graph(data, values):
                    data.loc[values['initial_date']:values['final_date'], 'Senkou-span A'], legend_label="Senkou-span A",
                    line_color="red", line_dash="4 4", line_width=2)
             cloud += 1
-        elif data.columns[i] == 'Senkou-span B':
+        if data.columns[i] == 'Senkou-span B':
             p.line(data.loc[values['initial_date']:values['final_date'], 'Date'],
                    data.loc[values['initial_date']:values['final_date'], 'Senkou-span B'], legend_label="Senkou-span B",
                    line_color="navy", line_dash="4 4", line_width=2)

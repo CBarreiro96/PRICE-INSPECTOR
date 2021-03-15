@@ -1,6 +1,5 @@
 from ichimoku import ichimoku
 from graph import Graph
-from datetime import datetime, date
 import json
 
 '''

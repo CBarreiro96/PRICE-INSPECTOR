@@ -65,7 +65,8 @@ def ichimoku(data, dict_paramater):
 
 
 '''
-It is a signal
+It is the signal method that identifies the buy and sell signals, 
+according to the ichimoku strategy
 '''
 
 
