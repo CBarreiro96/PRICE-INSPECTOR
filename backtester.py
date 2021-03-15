@@ -17,6 +17,7 @@ def backtester(data, values):
 
     # Assignment of variable
     balance = float(values['initial_balance'])
+    stop_loss = float(values['stop_loss'])
     historical_balance = [balance]
     process = 0
     operation = 0
@@ -25,65 +26,68 @@ def backtester(data, values):
     profit_operation = 0
     drawdown_list = []
     n_action = 0
-    dict_column = {'date': 0, 'open': 1, 'hight': 2, 'low': 3, 'close': 4, 'volumen': 5, 'tenkan': 7, 'Kijun-sen': 8,
-                   'chikou-span': 9, 'senkou-span A': 10, 'senkou-span B': 11, 'buy_sell': 12}
 
     # Strategy selection
     if values['name'] == 'Ichimoku Kinko Hyo':
-        ichimoku(data, values, dict_column)
+        ichimoku(data, values)
 
-    for i in range(len(data)):
-        ciclo = 0
-        # Buy operation
-        if data.iloc[i, dict_column['buy_sell']] == 1 and data.iloc[i, dict_column['close']] < balance and ciclo == 0:
-            # Number of action that the people buy
-            n_action = round(balance / data.iloc[i, dict_column['close']])
-            price_buy = round(n_action * data.iloc[i, dict_column['close']])
-            balance = round(balance - (n_action * data.iloc[i, dict_column['close']]))
-            process = data.iloc[i, dict_column['buy_sell']]
-            operation += 1
-            ciclo = 1
-            data.loc[i, 'Buy'] = 1
+    # Variable assignment
+    for i in range(len(data.columns)):
+        if data.columns[i] == 'Close':
+            close_column = i
+        elif data.columns[i] == 'Buy_Sell':
+            buy_sell_column = i
+            for i in range(len(data)):
+                ciclo = 0
+                # Buy operation
+                if data.iloc[i, buy_sell_column] == 1 and data.iloc[i, close_column] < balance and ciclo == 0:
+                    # Number of action that the people buy
+                    n_action = round(balance / data.iloc[i, close_column])
+                    price_buy = round(n_action * data.iloc[i, close_column])
+                    balance = round(balance - (n_action * data.iloc[i, close_column]))
+                    process = data.iloc[i, buy_sell_column]
+                    operation += 1
+                    ciclo = 1
+                    data.loc[i, 'Buy'] = 1
 
-        # Sale operation with  the signal of the strategy condition.
-        if data.iloc[i, dict_column['buy_sell']] == -1 and process == 1 and ciclo == 0:
-            balance = balance + (n_action * data.iloc[i, dict_column['close']])
-            historical_balance.append(balance)
-            if round(n_action * data.iloc[i, dict_column['close']]) > price_buy:
-                profit_operation += 1
-            else:
-                loss_operation += 1
-            n_action = 0
-            process = 0
-            data.loc[i, 'Sell'] = 1
+                # Sale operation with  the signal of the strategy condition.
+                if data.iloc[i, buy_sell_column] == -1 and process == 1 and ciclo == 0:
+                    balance = balance + (n_action * data.iloc[i, close_column])
+                    historical_balance.append(balance)
+                    if round(n_action * data.iloc[i, close_column]) > price_buy:
+                        profit_operation += 1
+                    else:
+                        loss_operation += 1
+                    n_action = 0
+                    process = 0
+                    data.loc[i, 'Sell'] = 1
 
-        # Sale operation with stop loss condition
-        if n_action != 0 and process == 1 and ciclo == 0 \
-                and round(n_action * data.iloc[i, dict_column['close']]) <= (
-                price_buy - (price_buy * (float(values['stop_loss']) / 100))):
-            balance = round(balance + (n_action * data.iloc[i, dict_column['close']]))
-            historical_balance.append(balance)
-            if round(n_action * data.iloc[i, dict_column['close']]) > price_buy:
-                profit_operation += 1
-            else:
-                loss_operation += 1
-            n_action = 0
-            process = 0
-            ciclo = 1
-            data.loc[i, 'Sell'] = 1
+                # Sale operation with stop loss condition
+                if n_action != 0 and process == 1 and ciclo == 0 and round(n_action * data.iloc[i, close_column]) <= \
+                        (price_buy - (price_buy * (stop_loss / 100))):
+                    balance = round(balance + (n_action * data.iloc[i, close_column]))
+                    historical_balance.append(balance)
+                    if round(n_action * data.iloc[i, close_column]) > price_buy:
+                        profit_operation += 1
+                    else:
+                        loss_operation += 1
+                    n_action = 0
+                    process = 0
+                    ciclo = 1
+                    data.loc[i, 'Sell'] = 1
 
-        # Sale when there are enough action pending to sell and it is the final data to show
-        if i == (len(data) - 1) and n_action != 0:
-            balance = round(balance + (n_action * data.iloc[i, dict_column['close']]))
-            historical_balance.append(balance)
-            if round(n_action * data.iloc[i, dict_column['close']]) > price_buy:
-                profit_operation += 1
-            else:
-                loss_operation += 1
-            n_action = 0
-            process = 0
-            ciclo = 1
-            data.loc[i, 'Sell'] = 1
+                # Sale when there are enough action pending to sell and it is the final data to show
+                if i == (len(data) - 1) and n_action != 0:
+                    balance = round(balance + (n_action * data.iloc[i, close_column]))
+                    historical_balance.append(balance)
+                    if round(n_action * data.iloc[i, close_column]) > price_buy:
+                        profit_operation += 1
+                    else:
+                        loss_operation += 1
+                    n_action = 0
+                    process = 0
+                    ciclo = 1
+                    data.loc[i, 'Sell'] = 1
 
     # Drawdown calculation
     for i in range(1, len(historical_balance)):
@@ -100,11 +104,19 @@ def backtester(data, values):
     # Backtest resume
     result = {'initial_balance': float(values['initial_balance']), 'final_balance': balance, 'n_operations': operation,
               'winning_operations': profit_operation, 'loosing_operations': loss_operation,
-              'profit_or_loss': balance - float(values['initial_balance']),
-              'effectivity': (profit_operation / operation), 'max_drawdown': min(drawdown_list),
-              'rentability': ((balance / float(values['initial_balance'])) ** (365 / delta_date.days)) - 1}
+              'profit_or_loss': balance - float(values['initial_balance']), 'rentability': ((balance / float(values['initial_balance'])) ** (365 / delta_date.days)) - 1}
 
-    # Rentability calculation
+    # Add max_drawdown to the dictionary
+    if drawdown_list:
+        result['max_drawdown'] = min(drawdown_list)
+    else:
+        result['max_drawdown'] = 0
+
+    # Add effectivity in the dictionary
+    if operation != 0:
+        result['effectivity'] = profit_operation / operation
+    else:
+        result['effectivity'] = 0
 
     json_graph = Graph(data, values)
     mix = []
