@@ -96,6 +96,6 @@ def Graph(data, values):
             p.asterisk(x=data[(data['Sell'] == 1)]['Date'],
                        y=data[(data['Sell'] == 1)]['High'] * 1.005,
                        size=5, color="red", line_width=4)
-    output_file('./config/graph2.html')
-    show(p)
+    # output_file('./config/graph2.html')
+    # show(p)
     return json.dumps(json_item(p, "myplot"))
