@@ -9,8 +9,8 @@ const Guide = () => {
     return (
         <>
         <Header/>
-        <BasicConcepts/>
         <Slider/>
+        <BasicConcepts/>
         </>
     )
 }

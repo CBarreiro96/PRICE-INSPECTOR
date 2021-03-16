@@ -15,21 +15,21 @@ const Login = () => {
         // Place your API call here to submit your payload.
     };
     return (
-        <section className="bg-nianza h-screen">
-            <div className="mx-auto flex justify-center lg:items-center h-full">
-                <form ref={form} onSubmit={handleSubmit} className="w-full sm:w-4/6 md:w-3/6 lg:w-4/12 xl:w-3/12 py-10 px-2 sm:px-0">
+        <section className="">
+            <div className="mx-auto flex justify-center lg:items-center w-full md:w-1/3 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 shadow-2xl rounded-3xl lg:mt-14">
+                <form ref={form} onSubmit={handleSubmit} className="w-full py-8 px-2 sm:px-0">
                     <div className="pt-0 px-2 flex flex-col items-center justify-center">
-                        <h3 className="text-2xl sm:text-3xl xl:text-2xl font-bold">Login To Your Account</h3>
+                        <h3 className="text-2xl sm:text-3xl xl:text-2xl font-bold text-white">Login To Your Account</h3>
                     </div>
                     <div className="mt-12 w-full px-2 sm:px-6">
                         <div className="flex flex-col mt-5">
-                            <label htmlFor="email" className="text-lg font-semibold">
+                            <label htmlFor="email" className="text-lg font-semibold text-white">
                                 Email
                             </label>
                             <input required id="email" name="email" className="form_imput" type="email" placeholder="e-mail address" />
                         </div>
                         <div className="flex flex-col mt-5">
-                            <label htmlFor="password" className="text-lg font-semibold ">
+                            <label htmlFor="password" className="text-lg font-semibold text-white">
                                 Password
                             </label>
                             <input required id="password" name="password" className="form_imput" type="password" placeholder="password" />
@@ -38,17 +38,17 @@ const Login = () => {
                     <div className="pt-6 w-full flex justify-between px-2 sm:px-6">
                         <div className="flex items-center">
                             <input id="rememberme" className="w-3 h-3 mr-2" type="checkbox" />
-                            <label htmlFor="rememberme" className="text-xs">
+                            <label htmlFor="rememberme" className="text-xs text-white">
                                 Remember Me
                             </label>
                         </div>
-                        <p className="text-xs">
+                        <p className="text-xs text-white">
                             Forgot Password?
                         </p>
                     </div>
-                    <div className="px-2">
-                        <button className="w-full bg-lime_green rounded px-8 py-3 text-lg mt-6">Login</button>
-                        <p className="mt-16 text-s text-center">
+                    <div className="px-1 md:px-5 mt-8 w-full">
+                        <Link className="w-full bg-gradient-to-b from-gray-500 via-gray-400 to-gray-500 rounded  px-20 lg:px-44 py-3 text-xl text-black font-medium mt-6" to="/backtesting">Login</Link>
+                        <p className="mt-16 text-s text-center text-white">
                             Don’t Have An Account?{" "}
                             <Link className="underline" to="/SignUp">Sign Up</Link>
                         </p>
