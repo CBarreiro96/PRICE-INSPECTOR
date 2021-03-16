@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Trading from '../images/Trading.mp4'
-import Trading_2 from '../images/Trading_2.mp4'
+
 
 
 const Headerlanding = () => {
