@@ -68,6 +68,5 @@ def Graph(data, values):
             p.asterisk(x=data[(data['Sell'] == 1)].loc[values['initial_date']:values['final_date'], 'Date'],
                        y=data[(data['Sell'] == 1)].loc[values['initial_date']:values['final_date'], 'Close'] + 7,
                        size=5, color="red", line_width=2)
-    output_file('graph2.html')
-    show(p)
+
     return json.dumps(json_item(p, "myplot"))
