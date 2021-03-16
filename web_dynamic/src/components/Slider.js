@@ -20,7 +20,7 @@ const Slider = () => {
 
 	return (
 		<div>
-			<h1 className="text-center text-4xl sm:text-6xl py-5">
+			<h1 className="text-center text-4xl sm:text-6xl pt-20 pb-8">
 				Strategies
 			</h1>
 			<div className="slider">
