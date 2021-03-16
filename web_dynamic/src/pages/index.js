@@ -1,7 +1,8 @@
 import React from 'react'
 import Headerlanding from '../components/Headerlanding';
 import Feature from '../components/Feature';
-import Team from '../components/Team';
+import About from '../components/About';
+import Footer from '../components/Footer';
 
 
 const Landing = () => {
@@ -9,7 +10,8 @@ const Landing = () => {
         <>
             <Headerlanding/>
             <Feature/>
-            <Team/>
+            <About/>
+            <Footer/>
         </>
 )
 }
