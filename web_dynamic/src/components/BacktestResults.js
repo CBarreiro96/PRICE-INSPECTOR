@@ -10,7 +10,6 @@ let rentability = '0';
 let maxDrawdown = '0';
 let effectivity = '0';
 function BacktestResults(props) {
-  console.log(props)
   if (props.results) {
     console.log(JSON.parse(props.results))
     myResults = JSON.parse(props.results)
@@ -24,8 +23,6 @@ function BacktestResults(props) {
     maxDrawdown = Math.round((myResults.max_drawdown*100)*100)/100;
     effectivity = myResults.effectivity;
   }
-   // this.props = {initial_balance: '', strategy_id: ''};
-   // this.onInputchange = this.onInputchange.bind(this);
     return (
     <div className="flex flex-col justify-center items-center p-6 bg-gradient-to-t from-transparent via-green-200 to-green-400 w-full">
     <div className="flex flex-col items-center p-4 w-1/2">

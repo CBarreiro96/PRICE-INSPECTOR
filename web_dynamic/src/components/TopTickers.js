@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {TiArrowUpOutline} from 'react-icons/ti';
 import {TiArrowDownOutline} from 'react-icons/ti'
-
+let topCompanies = ['Best #1','Top %', 'Best #2', 'Best #3', 'Best #4', 'Best #5'];
+let worstCompanies = {};
 
 class TopTickers extends Component {
     constructor(props) {
@@ -14,18 +15,20 @@ class TopTickers extends Component {
 
 }
     render() {
-        let arr = this.state.companies[0]
-        //const keys = Object.keys(arr);
-        console.log(this.state.companies)
-        console.log(arr)
+        if(this.state.companies.length > 0){
+            topCompanies = this.state.companies[0]
+            worstCompanies = this.state.companies[1];
+            console.log(topCompanies)
+            console.log(worstCompanies)
+        }
       return (
-        <div className="text-center flex justify-evenly items-center w-full p-4 bg-gradient-to-b from-transparent via-red-100 to-red-200 pt-16">
+        <div className="text-center flex justify-evenly items-center w-full p-4 bg-gradient-to-b from-transparent via-indigo-100 to-indigo-300 pt-16">
             <div className="w-1/3 justify-center  p-2 rounded">
                 <h1 className="text-2xl p-2 border-b-2 border-red-900 rounded font-mono shadow-xl mb-2">Top Gainers</h1>
                 <div  className="flex p-2 mb-1 justify-evenly border-b-2 border-green-600 border-opacity-25 bg-opacity-50 shadow-inner rounded hover:bg-gray-100">
-                    <h2 className="w-1/2 font-mono text-xl"></h2>
+                <h2 className="w-1/2 font-mono">{topCompanies.name}</h2> 
                     <div className="w-1/2 flex justify-center">
-                    <p  className="text-green-600"> </p>
+                    <p  className="text-green-600"> {Math.round(topCompanies.value*100)/100} %</p>
                     <TiArrowUpOutline className="w-6 h-6 animate-bounce fill-current text-green-700"/>
                     </div>
                 </div>
@@ -61,7 +64,7 @@ class TopTickers extends Component {
             <div className="w-1/3 justify-center  p-2 rounded">
                 <h1 className="text-2xl p-2 border-b-2 border-red-900 rounded font-mono shadow-xl mb-2">Top Losers</h1>
                 <div  className="flex p-2 mb-1 justify-evenly border-b-2 border-red-600 border-opacity-25 bg-opacity-50 shadow-inner rounded hover:bg-gray-100">
-                    <h2 className="w-1/2  font-mono">Farça FC</h2>
+                    <h2 className="w-1/2  font-mono">{}</h2>
                     <div className="w-1/2 flex justify-center">
                     <p  className="text-red-600">24.6% </p>
                     <TiArrowDownOutline className="w-6 h-6 animate-bounce  fill-current text-red-700"/>

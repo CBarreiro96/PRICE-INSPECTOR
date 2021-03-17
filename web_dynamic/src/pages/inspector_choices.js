@@ -9,7 +9,7 @@ const Inspector_choices = () => {
         <div className="h-screen flex-col">
             <Header />
             <TopTickers />
-       
+       <ChoicesBoard />
             <Footer />
         </div>
     )
