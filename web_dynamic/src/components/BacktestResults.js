@@ -9,7 +9,7 @@ const BacktestResults = () => {
                 <th>Parameter</th>
                 <th>Result</th>
                 </tr>
-                <tr className="bg-gray-200">
+                <tr className="text-center w-full rounded p-2 border-b-2 border-gray-400 shadow-lg font-mono hover:bg-gray-200">
                     <td>Total operations</td>
                     <td className="text-center"> 5</td>
                 </tr>

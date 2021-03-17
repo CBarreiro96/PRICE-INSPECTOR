@@ -3,7 +3,7 @@ import BacktestingContent from '../components/BacktestingContent'
 import Header from '../components/Header'
 import Footer from '../components/Footer';
 import BacktestResults from '../components/BacktestResults';
-import Graph from '../components/AdvancedOptions';
+import Appplot from '../components/SearchBar';
 
 const Backtesting = () => {
     return (
@@ -12,6 +12,7 @@ const Backtesting = () => {
             <Header />
             <BacktestingContent />
             <BacktestResults />
+            <Appplot />
             <Footer />
         </div>
         </>

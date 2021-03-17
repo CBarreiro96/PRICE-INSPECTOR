@@ -1,5 +1,4 @@
 import React from 'react'
-import Graph from '../components/AdvancedOptions'
 import ChoicesBoard from '../components/ChoicesBoard'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
