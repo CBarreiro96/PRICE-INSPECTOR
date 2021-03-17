@@ -30,7 +30,7 @@ const Headerlanding = () => {
                 </div>
                 <div className={`${isExpanded ? `block` : `hidden`} px-10 w-full block flex-grow lg:flex lg:items-center lg:w-auto`}>
                     <div className="text-md lg:flex-grow font-medium">
-                        <a className="links" href="#Feature">Feature</a>
+                        <a className="links" href="#Feature">Features</a>
                         <a className="links" href="#About">About</a>
                     </div>
                 <div>
