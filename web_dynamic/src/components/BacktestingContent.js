@@ -34,7 +34,7 @@ class BacktestForm extends React.Component {
     }
 
     handlePlot1 = () => {
-      Axios.get("http://localhost:5001/plot1").then(resp => window.Bokeh.embed.embed_item(resp.data, 'testPlot'))
+      Axios.get("http://192.168.33.10:5001/plot1").then(resp => window.Bokeh.embed.embed_item(resp.data, 'testPlot'))
     }
 
     onInputchange(event) {
@@ -51,12 +51,12 @@ class BacktestForm extends React.Component {
         return inputValue;
       };
       componentDidMount() {
-        fetch('http://localhost:5000/api/v1/companies')
+        fetch('http://192.168.33.10:5000/api/v1/companies')
             .then(response => response.json())
             .then(json => json.map(opt => ({ label: truncate(opt.name), value: opt.id })))
             .then(myMap => companies = myMap)
 
-            fetch('http://localhost:5000/api/v1/strategies')
+            fetch('http://192.168.33.10:5000/api/v1/strategies')
             .then(response => response.json())
             .then(json => this.setState({strategy_id: json[0].id}))
             .then()
@@ -74,7 +74,7 @@ class BacktestForm extends React.Component {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(this.state)
     };
-    fetch('http://0.0.0.0:5000/api/v1/run_backtest/', requestOptions)
+    fetch('http://192.168.33.10:5000/api/v1/run_backtest/', requestOptions)
         .then(response => response.json())
         .then(data => myResponse = data)
         .then(myResponse => window.Bokeh.embed.embed_item(myResponse[1], 'testPlot'));

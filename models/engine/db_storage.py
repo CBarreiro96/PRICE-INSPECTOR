@@ -186,8 +186,8 @@ class DBStorage:
             self.__session.commit()
         self.last_dates = self.last_two_dates()
         self.ranking = self.company_ranking()
-        #print("--- updated in %s minutes ---"
-        #      % (time.time() - start_time) / 60)
+        print("--- updated in %s minutes ---"
+              % round((time.time() - start_time) / 60))
 
     def prepare_data(self, **kwargs):
         """prepares the data to run the backtester or a strategy"""
@@ -302,13 +302,12 @@ class DBStorage:
 
         best = {}
         for i in range(len(df_best)):
-            best[self.get(Company, df_best.iloc[i, 0]).
-                 name] = df_best.iloc[i, 5]
-
+            best["name"] = self.get(Company, df_best.iloc[i, 0]).name
+            best["value"] = df_best.iloc[i, 5]
         worst = {}
         for i in range(len(df_worst)):
-            worst[self.get(Company, df_worst.iloc[i,0]).
-                  name] = df_worst.iloc[i, 5]
+            worst["name"] = self.get(Company, df_worst.iloc[i, 0]).name
+            worst["value"] = df_worst.iloc[i, 5]
 
         return [best, worst]
 
@@ -345,17 +344,20 @@ class DBStorage:
 
             # Strategy selection
             if values['name'] == 'Ichimoku Kinko Hyo':
-                ichimoku(df, values, dict_column)
+                ichimoku(df, values)
 
             # reading the last trading signal:
             # 1 for Buy, -1 for Sell and 0 for Hold
             try:
-                signal = df.iloc[len(df) - 1, dict_column['buy_sell']]
+                # signal = df.iloc[len(df) - 1, dict_column['buy_sell']]
+                # mock signal:
+                signal = df['Buy_Sell'].copy().sort_values().iloc[0]
             except Exception:
                 signal = 0
             if isnan(signal):
                 signal = 0
 
+            company_dict['price'] = df['Close'].iloc[-1]
             company_dict['signal'] = signal
             recom_dict[company_id] = company_dict
 
