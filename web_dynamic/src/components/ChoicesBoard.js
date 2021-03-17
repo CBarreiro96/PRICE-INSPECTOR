@@ -85,10 +85,10 @@ class ChoicesForm extends React.Component {
           loadOptions={loadOptions}
           defaultOptions
         />
-                        </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-col items-center p-4 w-1/2">
+        </div>
+        </div>
+        </div>
+        <div className="flex flex-col items-center p-4 w-1/2">
             <h2 className="text-2xl p-2 border-2 border-red-900 rounded font-mono shadow-2xl mb-2">Results</h2>
             <div className="flex justify-center items-center h-full w-full m-2">
                 <div className="flex flex-col justify-evenly items-center h-full w-full m-2">

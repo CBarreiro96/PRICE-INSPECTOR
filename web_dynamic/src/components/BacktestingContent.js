@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {GiChart } from 'react-icons/gi';
 import {FaMoneyBillWave} from 'react-icons/fa';
 import AsyncSelect from 'react-select/async';
-import Axios from 'axios'
+import BacktestResults from './BacktestResults'
 let companies;
 let myResponse;
 
@@ -55,14 +55,12 @@ class BacktestForm extends React.Component {
             fetch('http://localhost:5000/api/v1/strategies')
             .then(response => response.json())
             .then(json => this.setState({strategy_id: json[0].id}))
-            .then()
+
       }
 
       onSubmitForm() {
 
         this.state.stop_loss = this.state.stop_loss/100;
-       console.log(this.state)
-       
        const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -70,9 +68,11 @@ class BacktestForm extends React.Component {
     };
     fetch('http://0.0.0.0:5000/api/v1/run_backtest/', requestOptions)
         .then(response => response.json())
-        .then(data => myResponse = data[1])
-        .then(myResponse => window.testPlot = window.Bokeh.embed.embed_item(myResponse, 'testPlot'));
-    }
+        .then(data => myResponse = data)
+        .then(myResponse => this.setState({ Results: myResponse[0] }))
+        .then(myGraph => window.testPlot = window.Bokeh.embed.embed_item(myResponse[1], 'testPlot'))
+
+      }
 
     render() {
       return (
@@ -94,7 +94,6 @@ class BacktestForm extends React.Component {
                         <AsyncSelect
                           onChange={this.onChangeSelectedOption}
                           loadOptions={loadOptions}
-
                         />
                         </div>
                     </form>
@@ -146,6 +145,7 @@ class BacktestForm extends React.Component {
                     <button onClick={this.onSubmitForm} className="flex justify-evenly bg-gradient-to-r from-gray-200 to-gray-400 border-2 border-indigo-900 hover:border-indigo-400 hover:from-indigo-900 hover:to-indigo-500 rounded p-2 text-gray-800 w-2/3 mt-3 font-mono text-xl cursor-pointer shadow-2xl ring-2 ring-gray-300 hover:text-gray-50 hover:ring-gray-800 items-center focus:ring-green-700">Let's Backtest<span><FaMoneyBillWave className="ml-3 w-6 h-6 animate-pulse"/></span></button>
                 </div>
             </div>
+            <BacktestResults initial_balance={'0'} final_balance={'0'} results={this.state.Results}/>
         </div>
       );
     }
