@@ -300,16 +300,15 @@ class DBStorage:
         df_best = df_final.head(5).copy()
         df_worst = df_final.tail(5).copy()
 
-        best = {}
+        best_worst = []
         for i in range(len(df_best)):
-            best["name"] = self.get(Company, df_best.iloc[i, 0]).name
-            best["value"] = df_best.iloc[i, 5]
-        worst = {}
+            best_worst.append(self.get(Company, df_best.iloc[i, 0]).name)
+            best_worst.append(df_best.iloc[i, 5]) # price delta
         for i in range(len(df_worst)):
-            worst["name"] = self.get(Company, df_worst.iloc[i, 0]).name
-            worst["value"] = df_worst.iloc[i, 5]
+            best_worst.append(self.get(Company, df_worst.iloc[i, 0]).name)
+            best_worst.append(df_worst.iloc[i, 5]) # price delta
 
-        return [best, worst]
+        return best_worst
 
     def recomendations(self, strategy_id, companies_ids):
         """retrives a dictionary with the last price and trading
