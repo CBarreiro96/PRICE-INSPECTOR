@@ -115,7 +115,7 @@ def put_recomendations():
     if 'companies_ids' not in data:
         abort(400, description="Missing companies_ids")
 
-    companies_ids = json.loads(data['companies_ids'])
+    companies_ids = data['companies_ids']
     recom = storage.recomendations(data['strategy_id'],
                            companies_ids)
 
