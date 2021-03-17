@@ -7,13 +7,11 @@ import Appplot from '../components/SearchBar';
 
 const Backtesting = () => {
     return (
-        <>
-        <div className="h-screen justify-center items-center">
+        <div className="">
             <Header />
             <BacktestingContent />
             <Footer />
         </div>
-        </>
     )
 }
 

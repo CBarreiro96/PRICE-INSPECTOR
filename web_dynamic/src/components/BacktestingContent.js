@@ -17,7 +17,6 @@ const filterColors = (inputValue) => {
   );
 };
 
-
 const loadOptions = (inputValue, callback) => {
   setTimeout(() => {
     callback(filterColors(inputValue));
@@ -28,9 +27,46 @@ class BacktestForm extends React.Component {
 
   constructor(props) {
         super(props);
-        this.state = {company_id: '', strategy_id: ''};
+        this.state = {company_id: '', strategy_id: '', dropdownVisible: false};
         this.onInputchange = this.onInputchange.bind(this);
         this.onSubmitForm = this.onSubmitForm.bind(this);
+    }
+
+    toggleDropdown = (e) => {
+      this.setState(prevState => ({dropdownVisible: !prevState.dropdownVisible}))
+    }
+
+    renderDropdownMenu() {
+      return (
+        <div className='dropdown-body w-full bg-transparent'>
+                    <div className="w-full flex flex-col items-center m-4">
+                      <form action="#" className="w-full flex justify-between p-1">
+                          <label for="tickers">Tenkan-Sen</label>
+                          <input className="w-2/5" type="number" name="param_0_value" value={this.state.param_0_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
+                      </form>
+                      <form action="#" className="w-full flex justify-between p-1">
+                          <label for="tickers">Kijun-Sen</label>
+                          <input className="w-2/5" type="number" name="param_1_value" value={this.state.param_1_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
+                      </form>
+                      <form action="#" className="w-full flex justify-between p-1">
+                          <label for="tickers">Chikou Span</label>
+                          <input className="w-2/5" type="number" name="param_2_value" value={this.state.param_2_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
+                      </form>
+                      <form action="#" className="w-full flex justify-between p-1">
+                          <label for="tickers">Senkou Span A</label>
+                          <input className="w-2/5" type="number" name="param_3_value" value={this.state.param_3_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
+                      </form>
+                      <form action="#" className="w-full flex justify-between p-1">
+                          <label for="tickers">Senkou Span B</label>
+                          <input className="w-2/5" type="number" name="param_4_value" value={this.state.param_4_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
+                      </form>
+                      <form action="#" className="w-full flex justify-between p-1">
+                          <label for="tickers" className="text-md">Senkou Span B Projection</label>
+                          <input className="w-2/5" type="number" name="param_5_value" value={this.state.param_5_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
+                      </form>
+                      </div>
+        </div>
+      )
     }
 
     onInputchange(event) {
@@ -47,12 +83,12 @@ class BacktestForm extends React.Component {
         return inputValue;
       };
       componentDidMount() {
-        fetch('http://localhost:5000/api/v1/companies')
+        fetch('http://52.70.69.84:5000/api/v1/companies')
             .then(response => response.json())
             .then(json => json.map(opt => ({ label: truncate(opt.name), value: opt.id })))
             .then(myMap => companies = myMap)
 
-            fetch('http://localhost:5000/api/v1/strategies')
+            fetch('http://52.70.69.84:5000/api/v1/strategies')
             .then(response => response.json())
             .then(json => this.setState({strategy_id: json[0].id}))
 
@@ -66,7 +102,7 @@ class BacktestForm extends React.Component {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(this.state)
     };
-    fetch('http://0.0.0.0:5000/api/v1/run_backtest/', requestOptions)
+    fetch('http://52.70.69.84:5000/api/v1/run_backtest/', requestOptions)
         .then(response => response.json())
         .then(data => myResponse = data)
         .then(myResponse => this.setState({ Results: myResponse[0] }))
@@ -78,7 +114,7 @@ class BacktestForm extends React.Component {
       return (
 <div className="bg-gradient-to-b from-transparent via-gray-200 to-indigo-200">
             <h1 className="flex justify-center text-center text-gray-500 text-5xl p-6 pt-24 mb-6 font-mono">Backtest Your Strategy<span className="ml-4"><GiChart /></span></h1>
-            <div className="flex p-4 bg-gradient-to-b from-transparent via-green-200 to-green-400">
+            <div className="flex p-4 bg-gradient-to-b from-transparent via-green-200 to-green-400 h-screen">
             <div className="w-2/3 flex justify-center bg-gray-300 bg-opacity-50 rounded">
         <div id='testPlot' className="bk-root flex justify-center items-center"></div>
         </div>
@@ -115,33 +151,15 @@ class BacktestForm extends React.Component {
                             <option value="ichimoku">Ichimoku</option>
                         </select>
                     </form>
-                    <div className="w-full flex flex-col items-center m-4">
-                    <button className="p-2 border-2 bg-transparent border-red-900 text-red-900 rounded font-mono shadow-2xl mb-2 hover:bg-red-700 hover:text-gray-50">Advanced Options</button>
-                    <form action="#" className="w-full flex justify-between p-1">
-                        <label for="tickers">Tenkan-Sen</label>
-                        <input className="w-2/5" type="number" name="param_0_value" value={this.state.param_0_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
-                    </form>
-                    <form action="#" className="w-full flex justify-between p-1">
-                        <label for="tickers">Kijun-Sen</label>
-                        <input className="w-2/5" type="number" name="param_1_value" value={this.state.param_1_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
-                    </form>
-                    <form action="#" className="w-full flex justify-between p-1">
-                        <label for="tickers">Chikou Span</label>
-                        <input className="w-2/5" type="number" name="param_2_value" value={this.state.param_2_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
-                    </form>
-                    <form action="#" className="w-full flex justify-between p-1">
-                        <label for="tickers">Senkou Span A</label>
-                        <input className="w-2/5" type="number" name="param_3_value" value={this.state.param_3_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
-                    </form>
-                    <form action="#" className="w-full flex justify-between p-1">
-                        <label for="tickers">Senkou Span B</label>
-                        <input className="w-2/5" type="number" name="param_4_value" value={this.state.param_4_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
-                    </form>
-                    <form action="#" className="w-full flex justify-between p-1">
-                        <label for="tickers" className="text-md">Senkou Span B Projection</label>
-                        <input className="w-2/5" type="number" name="param_5_value" value={this.state.param_5_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
-                    </form>
-                    </div>
+                    <div className='dropdown-container w-full'>
+        <div className='dropdown-trigger flex justify-center'>
+          <button onClick={this.toggleDropdown} className="p-2 border-2 bg-transparent border-red-900 text-red-900 rounded font-mono shadow-2xl mt-2 hover:bg-red-700 hover:text-gray-50">Advanced Options</button>
+        </div>
+        {
+          this.state.dropdownVisible &&
+          this.renderDropdownMenu()
+        }
+      </div>
                     <button onClick={this.onSubmitForm} className="flex justify-evenly bg-gradient-to-r from-gray-200 to-gray-400 border-2 border-indigo-900 hover:border-indigo-400 hover:from-indigo-900 hover:to-indigo-500 rounded p-2 text-gray-800 w-2/3 mt-3 font-mono text-xl cursor-pointer shadow-2xl ring-2 ring-gray-300 hover:text-gray-50 hover:ring-gray-800 items-center focus:ring-green-700">Let's Backtest<span><FaMoneyBillWave className="ml-3 w-6 h-6 animate-pulse"/></span></button>
                 </div>
             </div>
