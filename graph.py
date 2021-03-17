@@ -98,4 +98,4 @@ def Graph(data, values):
                        size=5, color="red", line_width=4)
     # output_file('./config/graph2.html')
     # show(p)
-    return json.dumps(json_item(p, "myplot"))
+    return json_item(p, "myplot")

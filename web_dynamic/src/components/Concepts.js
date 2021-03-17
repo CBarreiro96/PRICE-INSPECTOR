@@ -14,10 +14,10 @@ const BasicConcepts = () => {
 			<h1 className="text-center text-4xl sm:text-6xl py-5 ">
 				Basic Concepts
 			</h1>
-			<section className="flex flex-row flex-wrap mx-auto ">
+			<section className="flex flex-row flex-wrap mx-auto">
 				{/* Tiker Card */}
 				<div className="flex w-full px-4 py-5 md:w-1/2 lg:w-1/3">
-					<div className="flex flex-col  pb-4 mb-6 bg-lime_green rounded-3xl shadow-lg hover:shadow-2xl">
+					<div className="flex flex-col  pb-4 mb-6 bg-lime_green rounded-3xl shadow-lg hover:shadow-2xl border-2 border-gray-500">
 						<div className="">
 							<img className="w-full h-20 sm:h-24 my-2" src={Search_Dolar} alt="Tiker"/>
       			</div>
@@ -35,7 +35,7 @@ const BasicConcepts = () => {
   			</div>
 				{/* Backtesting Card */}
 				<div className="flex w-full px-4 py-5 md:w-1/2 lg:w-1/3">
-					<div className="flex flex-col  pb-4 mb-6 bg-flickr_pink rounded-3xl shadow-lg hover:shadow-2xl">
+					<div className="flex flex-col  pb-4 mb-6 bg-flickr_pink rounded-3xl shadow-lg hover:shadow-2xl  border-2 border-gray-500">
 						<div className="">
 							<img className="w-full h-20 sm:h-24 my-2" src={Eye} alt="Alert"/>
       			</div>
@@ -53,7 +53,7 @@ const BasicConcepts = () => {
   			</div>
 				{/* Cost effectiveness Card */}
 				<div className="flex w-full px-4 py-5 md:w-1/2 lg:w-1/3">
-					<div className="flex flex-col  pb-4 mb-6 bg-lime_green rounded-3xl shadow-lg hover:shadow-2xl">
+					<div className="flex flex-col  pb-4 mb-6 bg-lime_green rounded-3xl shadow-lg hover:shadow-2xl  border-2 border-gray-500">
 						<div className="">
 							<img className="w-full h-20 sm:h-24 my-2" src={Balance_Scale} alt="Tiker"/>
       			</div>
@@ -71,7 +71,7 @@ const BasicConcepts = () => {
   			</div>
 				{/* Drawdown Card */}
 				<div className="flex w-full px-4 py-5 md:w-1/2 lg:w-1/3">
-					<div className="flex flex-col  pb-4 mb-6 bg-flickr_pink rounded-3xl shadow-lg hover:shadow-2xl">
+					<div className="flex flex-col  pb-4 mb-6 bg-flickr_pink rounded-3xl shadow-lg hover:shadow-2xl  border-2 border-gray-500">
 						<div className="">
 							<img className="w-full h-20 sm:h-24 my-2" src={Chart_line} alt="Tiker"/>
       			</div>
@@ -89,7 +89,7 @@ const BasicConcepts = () => {
   			</div>
 				{/* Effectiveness Card */}
 				<div className="flex w-full px-4 py-5 md:w-1/2 lg:w-1/3">
-					<div className="flex flex-col  pb-4 mb-6 bg-lime_green rounded-3xl shadow-lg hover:shadow-2xl">
+					<div className="flex flex-col  pb-4 mb-6 bg-lime_green rounded-3xl shadow-lg hover:shadow-2xl  border-2 border-gray-500">
 						<div className="">
 							<img className="w-full h-20 sm:h-24 my-2" src={Percent} alt="Tiker"/>
       			</div>
@@ -106,7 +106,7 @@ const BasicConcepts = () => {
     			</div>
   			</div>
 				<div className="flex w-full px-4 py-5 md:w-1/2 lg:w-1/3">
-					<div className="flex flex-col  pb-4 mb-6 bg-flickr_pink rounded-3xl shadow-lg hover:shadow-2xl">
+					<div className="flex flex-col  pb-4 mb-6 bg-flickr_pink rounded-3xl shadow-lg hover:shadow-2xl  border-2 border-gray-500">
 						<div className="">
 							<img className="w-full h-20 sm:h-24 my-2" src={Alert} alt="Alert"/>
       			</div>
