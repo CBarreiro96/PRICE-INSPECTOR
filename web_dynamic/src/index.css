@@ -10,11 +10,11 @@
 }
 
 .nav_1 {
-  @apply fixed z-50 w-full h-16 top-0 flex flex-wrap items-center justify-between px-2 py-3  shadow-2xl text-white
+  @apply fixed z-50 w-full h-16 top-0 flex flex-wrap items-center justify-center px-2 py-3  shadow-2xl text-white
 }
 
 .nav_2 {
-  @apply fixed z-50 w-full h-16 top-0 flex flex-wrap items-center justify-between px-2 py-3 shadow-2xl bg-white text-black
+  @apply fixed z-50 w-full h-16 top-0 flex flex-wrap items-center justify-center px-2 py-3 shadow-2xl bg-white text-black
 }
 
 .nav_3 {

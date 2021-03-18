@@ -11,6 +11,7 @@ const BasicConcepts = () => {
 	return (
 		<div className="pt-16">
 			{/* Title */}
+			<div className="mx-auto w-4/5 border-b-2 border-gray-400 h-6"></div>
 			<h1 className="text-center text-4xl sm:text-6xl py-5 ">
 				Basic Concepts
 			</h1>
@@ -63,9 +64,7 @@ const BasicConcepts = () => {
           		</h2>
       			</div>
 						<p className="flex flex-row flex-wrap w-full px-8 py-2 overflow-hidden text-base sm:text-lg text-center">
-						It was named for the noise the typewriter made when typing letters.
-						The specific and unique code is known as tiker, which serves to recognize a specific action within the financial market and may vary depending on that market.
-						The ticker is usually the abbreviation of the corresponding company, eg: Apple [AAPL]
+						A transaction is cost-effective when the greatest benefit is gained for a comparatively low price. For example, the addition of a product feature to a product design is cost-effective if the result is an increase in sales that exceeds the cost of the feature. The concept is commonly employed when choosing from a variety of investment options.
       			</p>
     			</div>
   			</div>
@@ -99,9 +98,9 @@ const BasicConcepts = () => {
           		</h2>
       			</div>
 						<p className="flex flex-row flex-wrap w-full px-8 py-2 overflow-hidden text-base sm:text-lg text-center">
-						It was named for the noise the typewriter made when typing letters.
-						The specific and unique code is known as tiker, which serves to recognize a specific action within the financial market and may vary depending on that market.
-						The ticker is usually the abbreviation of the corresponding company, eg: Apple [AAPL]
+						Effectiveness is the capability of producing a desired result or the ability to produce desired output.
+						When something is deemed effective, it means it has an intended or expected outcome, or produces a deep, vivid impression.
+						In stock market investment it means how how much your capital change in gain or loss.
       			</p>
     			</div>
   			</div>

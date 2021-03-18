@@ -3,8 +3,7 @@ import { useEffect } from 'react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import Logo from '../images/Logo.png';
-import Screenshot from '../images/Screenshot.png'
-import { Link } from 'react-router-dom';
+import Screenshot from '../images/inspectorChoices.png'
 import BacktesterDemo from '../images/BacktesterDemo.mp4'
 
 
@@ -15,7 +14,7 @@ const Feature = () => {
 	}, []);
 
 	return (
-			<div id="Feature" class="mx-auto relative bg-gradient-to-b from-blue-100 to-blue-300">
+			<div id="Feature" class="mx-auto relative bg-white">
 				{/* Feature 1 */}
 				<div data-aos="fade-down"class="md:flex flex-row flex-wrap items-center mx-5 pt-16">
 						<img src={Logo} class="sm:w-1/4 w-1/2 py-2 mx-auto " alt=""/>
@@ -32,10 +31,10 @@ const Feature = () => {
 								</p>	<p className="text-2xl font-medium text-center">Price Inspector is all you need!</p>
 						</div>
 					</div>
-					<Link className="mx-5 font-medium text-2xl text-white px-2 py-4 shadow-2xl rounded-3xl bg-gradient-to-b from-gray-700 to-gray-900 hover:opacity-50" to="/SignUp">REGISTER NOW!</Link>
+					
 				</div>
 				{/* Feature 2 */}
-				<div data-aos="fade-up" class="md:flex pt-5 flex-row flex-wrap items-center text-blue-300 bg-gray-900">
+				<div data-aos="fade-up" class="md:flex pt-5 flex-row flex-wrap items-center text-gray-200 bg-gray-900">
 					<div class="w-full mx-auto md:w-1/2 p-3">
 						<div class="mb-10 text-center">
 							<h1 class="font-bold text-2xl mb-5">¿Backtesting?... We do the work for you!</h1>
@@ -47,12 +46,12 @@ Chillout! You got into the right place.
 							<p  class="text-lg mt-3">Price Inspector takes care of the Backtesting for you, just select the company and the strategy you want to test with a few parameters, Relax, nothing strange... And after a click you will have the results and you can decide if this strategy fits what you expect or not... As simple as that!</p>
 						</div>
 					</div>
-					<video src={BacktesterDemo} autoPlay loop muted class=" w-1/2 p-3 h-full py-2 mx-auto " alt=""/>
+					<video src={BacktesterDemo} autoPlay loop muted class=" w-1/2 p-3 h-full py-2 mx-auto border-l-4 border-gray-50 " alt=""/>
 				</div>
 				{/* Feature 3 */}
-				<div data-aos="fade-down"class=" pt-5 md:flex flex-row flex-wrap items-center mx-5">
-						<img src={Screenshot} class="sm:w-1/3 w-1/2 py-2 mx-auto rounded-3xl shadow-2xl mb-5" alt=""/>
-					<div class="w-full mx-auto md:w-1/2 ">
+				<div data-aos="fade-down"class="md:flex items-center pt-2">
+						<img src={Screenshot} class="w-1/2 h-full p-2 mb-2 shadow-2xl rounded-3xl" alt=""/>
+						<div class="h-full mx-auto md:w-1/2 border-l-4 border-gray-900 p-12">
 						<div class="mb-10 text-center">
 							<h1 class="font-bold text-2xl mb-5">We have recommendations for you...</h1>
 							<p class="text-lg ">

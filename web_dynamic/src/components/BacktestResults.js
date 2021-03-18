@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import Bear from '../images/Bear.jpg'
+import Bull from '../images/Bull.jpg'
+
 let myResults;
 let initialBalance = '0';
 let finalBalance = '0';
@@ -13,23 +16,25 @@ let saveEvent = 'Save Backtest'
 function BacktestResults(props) {
   if (props.results) {
     myResults = JSON.parse(props.results)
-    initialBalance = myResults.initial_balance  + '.00';
-    finalBalance = myResults.final_balance  + '.00';
+    initialBalance = myResults.initial_balance;
+    finalBalance = myResults.final_balance;
     numberOps = myResults.n_operations;
     winningOps = myResults.winning_operations;
     lossingOps = myResults.loosing_operations;
-    profitLoss = myResults.profit_or_loss + '.00';
-    rentability = Math.round((myResults.rentability*100)*100)/1000;
+    profitLoss = Math.round((myResults.profit_or_loss*100)*100)/10000;
+    rentability = Math.round((myResults.rentability*100)*1000)/1000;
     maxDrawdown = Math.round((myResults.max_drawdown*100)*100)/100;
-    effectivity = myResults.effectivity;
+    effectivity = Math.round((myResults.effectivity*100)*1000)/1000;
   }
   function handleClick() {
     saveEvent = 'Saved'
   }
     return (
-    <div className="flex flex-col justify-center items-center p-6 bg-gradient-to-t from-transparent via-green-200 to-green-400 w-full">
-    <div className="flex flex-col items-center p-4 w-1/2">
-    <h2 className="text-2xl p-2 border-2 border-red-900 rounded font-mono shadow-2xl mb-2">Results</h2>
+      <div className="flex items-center justify-between">
+    <div className="1/5 opacity-70"><img src={Bear} className="rounded-tr-lg rounded-br-lg" alt="BearImage"></img></div>
+    <div className="flex flex-col justify-center items-center p-6 w-3/5">
+    <div className="flex flex-col items-center p-4 w-full">
+    <h2 className="text-2xl p-2 border-2 border-gray-800 rounded font-mono shadow-2xl mb-2">Results</h2>
     <div className="flex justify-center items-center h-full w-full m-2">
         <div className="flex flex-col justify-evenly items-center h-full w-full m-2">
             <p className="text-center w-full rounded p-2 border-b-2 border-gray-400 shadow-lg font-mono hover:bg-gray-300 font-semibold">Initial Balance</p>
@@ -53,13 +58,14 @@ function BacktestResults(props) {
              <p className="text-center w-full rounded p-2 border-b-2 border-gray-400 shadow-lg font-mono hover:bg-gray-300">{maxDrawdown} %</p>
              <p className="text-center w-full rounded p-2 border-b-2 border-gray-400 shadow-lg font-mono hover:bg-gray-300">{effectivity} %</p>
         </div>
-
-    </div>
-</div>
-    <form>
-      <button className="bg-green-700 rounded py-2 px-4 mt-4 text-gray-100 hover:bg-green-600" onClick={handleClick}>{saveEvent}</button>
-      <input type="text" className="bg-gray-200 rounded py-2 px-4 mt-4 ml-5 border-b-2 border-green-600"></input>
+        </div>
+        <form action="#">
+      <button type="submit" className="bg-gray-700 rounded py-2 px-4 mt-4 text-gray-100 hover:bg-gray-600 font-mono" onClick={handleClick}>{saveEvent}</button>
+      <input type="text" className="bg-gray-200 rounded py-2 px-4 mt-4 ml-5 border-b-2 border-gray-600"></input>
     </form>
+</div>
+    </div>
+    <div className="1/5 opacity-70"><img src={Bull} className="rounded-tl-lg rounded-bl-lg" alt="BullImage"></img></div>
 </div>
   );
 }

@@ -47,7 +47,7 @@ const Login = () => {
                         </p>
                     </div>
                     <div className="px-1 md:px-5 mt-8 w-full">
-                        <Link className="w-full bg-gradient-to-b from-gray-500 via-gray-400 to-gray-500 rounded  px-20 lg:px-44 py-3 text-xl text-black font-medium mt-6" to="/backtesting">Login</Link>
+                        <Link className="w-full bg-gray-400 rounded  px-20 lg:px-44 py-3 text-xl text-black font-medium mt-6" to="/backtesting">Login</Link>
                         <p className="mt-16 text-s text-center text-white">
                             Don’t Have An Account?{" "}
                             <Link className="underline" to="/SignUp">Sign Up</Link>

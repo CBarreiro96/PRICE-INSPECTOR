@@ -47,8 +47,9 @@ const Headerlanding = () => {
                 </video>
             </div>
             <div className="absolute h-screen w-full p-0 m-0">
-                <div className=" w-full my-28 md:my-60 mx-auto text-center bg-black opacity-80">
+                <div className=" w-full my-28 md:my-60 mx-auto text-center bg-black opacity-90 flex flex-col justify-center items-center p-3">
                     <h1 className="text-3xl sm:text-5xl lg:text-6xl py-2 font-bold italic font-mono text-white">BACKTEST YOUR INVESMENT STRATEGY</h1>
+                    <Link className="w-1/6 font-medium text-2xl text-white px-1 py-2 shadow-2xl rounded-xl bg-gradient-to-b from-gray-700 to-gray-900 hover:opacity-50" to="/Backtesting">TRY IT NOW!</Link>
                 </div>
             </div>
             </div>

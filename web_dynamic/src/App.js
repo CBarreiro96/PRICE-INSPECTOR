@@ -6,9 +6,6 @@ import Inspector_choices from './pages/inspector_choices';
 import Guide from './pages/guide';
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
-import Footer from './components/Footer';
-
-
 
 function App() {
   return (
