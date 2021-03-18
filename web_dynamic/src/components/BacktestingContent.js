@@ -85,12 +85,12 @@ class BacktestForm extends React.Component {
         return inputValue;
       };
       componentDidMount() {
-        fetch('http://localhost:5000/api/v1/companies')
+        fetch('http://52.70.69.84:5000/api/v1/companies')
             .then(response => response.json())
             .then(json => json.map(opt => ({ label: truncate(opt.name), value: opt.id })))
             .then(myMap => companies = myMap)
 
-            fetch('http://localhost:5000/api/v1/strategies')
+            fetch('http://52.70.69.84:5000/api/v1/strategies')
             .then(response => response.json())
             .then(json => this.setState({strategy_id: json[0].id}))
       }
@@ -117,7 +117,7 @@ class BacktestForm extends React.Component {
         body: JSON.stringify(this.state)
     };
     
-    fetch('http://localhost:5000/api/v1/run_backtest/', requestOptions)
+    fetch('http://52.70.69.84:5000/api/v1/run_backtest/', requestOptions)
         .then(response => response.json())
         .then(data => myResponse = data)
         .then(myResponse => this.setState({ Results: myResponse[0] }))

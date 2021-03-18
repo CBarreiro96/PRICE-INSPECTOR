@@ -14,7 +14,7 @@ class TopTickers extends Component {
       super(props);
       this.state = {companies: {} };
     
-    fetch('http://localhost:5000/api/v1/companies/best_worst')
+    fetch('http://52.70.69.84:5000/api/v1/companies/best_worst')
     .then(response => response.json())
     .then(data => this.setState({companies: data}))
 

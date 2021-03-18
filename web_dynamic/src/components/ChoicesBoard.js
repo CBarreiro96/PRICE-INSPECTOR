@@ -41,7 +41,7 @@ class ChoicesForm extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state)
 	};
-	fetch('http://localhost:5000/api/v1/companies/recomendations/', requestOptions)
+	fetch('http://52.70.69.84:5000/api/v1/companies/recomendations/', requestOptions)
             .then(response => response.json())
             .then(data => myResponse = data)
             .then(myResponse => this.setState({response: myResponse}))
@@ -61,12 +61,12 @@ onChangeSelectedOption4 = e => {
   this.state.companies_ids[3] = e.value
 };
     componentDidMount() {
-        fetch('http://localhost:5000/api/v1/companies')
+        fetch('http://52.70.69.84:5000/api/v1/companies')
             .then(response => response.json())
             .then(json => json.map(opt => ({ label: truncate(opt.name),
 					     value: opt.id })))
             .then(myMap => companies = myMap);
-	fetch('http://localhost:5000/api/v1/strategies')
+	fetch('http://52.70.69.84:5000/api/v1/strategies')
             .then(response => response.json())
             .then(json => this.setState({strategy_id: json[0].id}))
             .then()
