@@ -17,7 +17,7 @@ function BacktestResults(props) {
   if (props.results) {
     myResults = JSON.parse(props.results)
     initialBalance = myResults.initial_balance;
-    finalBalance = myResults.final_balance;
+    finalBalance = Math.round(myResults.final_balance);
     numberOps = myResults.n_operations;
     winningOps = myResults.winning_operations;
     lossingOps = myResults.loosing_operations;
@@ -60,8 +60,8 @@ function BacktestResults(props) {
         </div>
         </div>
         <form action="#">
-      <button type="submit" className="bg-gray-700 rounded py-2 px-4 mt-4 text-gray-100 hover:bg-gray-600 font-mono" onClick={handleClick}>{saveEvent}</button>
-      <input type="text" className="bg-gray-200 rounded py-2 px-4 mt-4 ml-5 border-b-2 border-gray-600"></input>
+      <button type="submit"  className="bg-gray-700 rounded py-2 px-4 mt-4 text-gray-100 hover:bg-gray-600 font-mono" onClick={handleClick}>{saveEvent}</button>
+      <input type="text" placeholder="Backtest name" className="bg-gray-200 rounded py-2 px-4 mt-4 ml-5 border-b-2 border-gray-600"></input>
     </form>
 </div>
     </div>

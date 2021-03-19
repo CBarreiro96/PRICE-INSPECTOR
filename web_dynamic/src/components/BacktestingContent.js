@@ -4,6 +4,8 @@ import {GiChart } from 'react-icons/gi';
 import {FaMoneyBillWave} from 'react-icons/fa';
 import AsyncSelect from 'react-select/async';
 import BacktestResults from './BacktestResults'
+import {FaRegCheckCircle} from 'react-icons/fa'
+import {GiGlassCelebration} from 'react-icons/gi'
 
 let companies;
 let myResponse;
@@ -44,27 +46,27 @@ class BacktestForm extends React.Component {
                     <div className="w-full flex flex-col items-center m-2">
                       <form action="#" className="w-full flex justify-between p-1">
                           <label for="tickers" className="text-gray-50">Tenkan-Sen</label>
-                          <input className="w-2/5" type="number" name="param_0_value" value={this.state.param_0_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
+                          <input className="w-2/5 rounded" type="number" name="param_0_value" value={this.state.param_0_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
                       </form>
                       <form action="#" className="w-full flex justify-between p-1">
                           <label for="tickers" className="text-gray-50">Kijun-Sen</label>
-                          <input className="w-2/5" type="number" name="param_1_value" value={this.state.param_1_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
+                          <input className="w-2/5 rounded" type="number" name="param_1_value" value={this.state.param_1_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
                       </form>
                       <form action="#" className="w-full flex justify-between p-1">
                           <label for="tickers" className="text-gray-50">Chikou Span</label>
-                          <input className="w-2/5" type="number" name="param_2_value" value={this.state.param_2_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
+                          <input className="w-2/5 rounded" type="number" name="param_2_value" value={this.state.param_2_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
                       </form>
                       <form action="#" className="w-full flex justify-between p-1">
                           <label for="tickers" className="text-gray-50">Senkou Span A</label>
-                          <input className="w-2/5" type="number" name="param_3_value" value={this.state.param_3_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
+                          <input className="w-2/5 rounded" type="number" name="param_3_value" value={this.state.param_3_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
                       </form>
                       <form action="#" className="w-full flex justify-between p-1">
                           <label for="tickers" className="text-gray-50">Senkou Span B</label>
-                          <input className="w-2/5" type="number" name="param_4_value" value={this.state.param_4_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
+                          <input className="w-2/5 rounded" type="number" name="param_4_value" value={this.state.param_4_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
                       </form>
                       <form action="#" className="w-full flex justify-between p-1">
                           <label for="tickers" className="text-md text-gray-50">Senkou Span B Projection</label>
-                          <input className="w-2/5" type="number" name="param_5_value" value={this.state.param_5_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
+                          <input className="w-2/5 rounded" type="number" name="param_5_value" value={this.state.param_5_value} onChange={this.onInputchange} min="0" max="100" autoFocus></input>
                       </form>
                       </div>
         </div>
@@ -96,6 +98,11 @@ class BacktestForm extends React.Component {
       }
 
       myRemoveDiv() {
+        if (document.getElementById("instructions")) {
+let z = document.getElementById("instructions")
+z.remove()
+        }
+        
         document.getElementById("message").innerHTML = "Loading...";
         let x = document.getElementById('testPlot');
         let y = document.getElementsByClassName('bk')
@@ -131,14 +138,23 @@ class BacktestForm extends React.Component {
     <h1 className="flex justify-center text-center text-gray-600 text-5xl p-6 pt-24 mb-6 font-mono">Backtest Your Strategy<span className="ml-4"><GiChart /></span></h1>
     <div className="flex p-4 h-screen bg-gray-800 ">
         <div className="w-2/3 flex justify-center  items-center">
-        <div id='testPlot' className="bk-root flex justify-center items-center"><p id="message" className="animate-pulse  text-5xl text-gray-50"></p><span id="clock" className="w-6 h-6 animate-spin fill-current text-gray-50"></span></div>
-        <div id='testPlot' className="bk-root flex justify-center items-center"></div>
-        <div id='testPlot' className="bk-root flex justify-center items-center"></div>
-        <div id='testPlot' className="bk-root flex justify-center items-center"></div>
-        <div id='testPlot' className="bk-root flex justify-center items-center"></div>
-        <div id='testPlot' className="bk-root flex justify-center items-center"></div>
-        <div id='testPlot' className="bk-root flex justify-center items-center"></div>
-        <div id='testPlot' className="bk-root flex justify-center items-center"></div>
+        <div id='instructions' className="bk-root flex flex-col">
+          <p className="text-2xl text-gray-50">¿What do you want to Backtest today?</p>
+          <p className="text-gray-50 text-lg flex items-center"><FaRegCheckCircle className="m-3"/> Enter your initial balance</p>
+          <p className="text-gray-50 text-lg flex items-center"><FaRegCheckCircle className="m-3"/> Select the desired company</p>
+          <p className="text-gray-50 text-lg flex items-center"><FaRegCheckCircle className="m-3"/> A Timeframe bigger than 3 months will give more accurate results</p>
+          <p className="text-gray-50 text-lg flex items-center"><FaRegCheckCircle className="m-3"/> Stoploss marks the security level to sell when it reaches a certain price</p>
+          <p className="text-gray-50 text-lg flex items-center"><FaRegCheckCircle className="m-3"/> Select your favorite strategy</p>
+          <p className="text-gray-50 text-xl flex items-center"><GiGlassCelebration className="m-1 w-12 h-12"/> Enjoy</p>
+        </div>
+        <div id='testPlot' className="bk-root flex justify-center items-center"><p id="message" className="animate-pulse  text-5xl text-gray-50"></p></div>
+        <div id='testPlot' className="bk-root flex justify-center items-center"><p id="message" className="animate-pulse  text-5xl text-gray-50"></p></div>
+        <div id='testPlot' className="bk-root flex justify-center items-center"><p id="message" className="animate-pulse  text-5xl text-gray-50"></p></div>
+        <div id='testPlot' className="bk-root flex justify-center items-center"><p id="message" className="animate-pulse  text-5xl text-gray-50"></p></div>
+        <div id='testPlot' className="bk-root flex justify-center items-center"><p id="message" className="animate-pulse  text-5xl text-gray-50"></p></div>
+        <div id='testPlot' className="bk-root flex justify-center items-center"><p id="message" className="animate-pulse  text-5xl text-gray-50"></p></div>
+        <div id='testPlot' className="bk-root flex justify-center items-center"><p id="message" className="animate-pulse  text-5xl text-gray-50"></p></div>
+        <div id='testPlot' className="bk-root flex justify-center items-center"><p id="message" className="animate-pulse  text-5xl text-gray-50"></p></div>
         </div>
         <div className="w-1/3 flex flex-col items-center justify-evenly p-3 bg-transparent font-mono border-l-2 border-gray-50">
         <h2 className="text-2xl p-2 border-b-2 border-gray-800 rounded font-mono shadow-2xl mb-2 text-gray-50">Control Panel</h2>

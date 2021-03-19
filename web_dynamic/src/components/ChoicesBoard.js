@@ -145,7 +145,7 @@ onChangeSelectedOption4 = e => {
             </div>
                 </div>
                 <div className="flex justify-center items-center m-4">
-                <button onClick={this.onSubmitForm} className="flex justify-evenly bg-gray-600 border-2 border-gray-900 hover:border-gray-700 hover:bg-gray-500 rounded p-1 text-gray-50 w-1/3 mt-3 font-mono text-lg cursor-pointer shadow-2xl ring-2 ring-gray-300 hover:text-gray-50 hover:ring-gray-800 items-center focus:ring-green-700">Run the Inspector <span><DiYeoman className="w-8 h-8 animate-pulse"/></span></button>
+                <button onClick={this.onSubmitForm} className="flex justify-evenly bg-gray-600 border-2 border-gray-900 hover:border-gray-700 hover:bg-gray-500 rounded p-1 text-gray-50 w-1/5 mt-3 font-mono text-lg cursor-pointer shadow-2xl ring-2 ring-gray-300 hover:text-gray-50 hover:ring-gray-800 items-center focus:ring-green-700">Run the Inspector <span><DiYeoman className="w-8 h-8 animate-pulse"/></span></button>
                 </div>
             </div>
         );
