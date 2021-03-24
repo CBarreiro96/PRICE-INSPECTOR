@@ -13,7 +13,7 @@ You must graph, do some maths, verify data, know concepts, spend a lot, actually
 
 <div align="center"><img src="https://user-images.githubusercontent.com/66263776/112241542-7251cf80-8c18-11eb-888e-30cd9cfff0f8.png" width="400" height= "200"> </div>
 
-## :tools: Installation :tools:
+## :hammer_and_wrench: Installation :hammer_and_wrench:
 
 Clone this repository in terminal
 >$ git clone https://github.com/CBarreiro96/PRICE-INSPECTOR
